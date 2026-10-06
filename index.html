@@ -1,0 +1,2554 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether Weather | Atmospheric Precision Telemetry & Global Spatial Radar</title>
+  <meta name="description" content="Aether Weather telemetry hub pairs midnight celestial depths with luminous optical glass layers for high-precision meteorological tracking.">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Google Fonts: Space Grotesk, Geist, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Google Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Dynamic Stratospheric Glow Background -->
+  <div class="ambient-background"></div>
+
+  <!-- ==========================================================================
+       Header & Global Navigation
+       ========================================================================== -->
+  <header class="aether-header d-flex align-items-center">
+    <div class="container-fluid px-3 px-lg-4 d-flex align-items-center justify-content-between">
+      
+      <!-- Brand & Desktop Navigation -->
+      <div class="d-flex align-items-center gap-3 gap-xl-4">
+        <!-- Logo -->
+        <a href="#dashboard" class="d-flex align-items-center gap-2 text-decoration-none" data-nav-view="dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" class="brand-logo-svg">
+            <circle cx="50" cy="50" r="46" stroke="#00f2fe" stroke-width="4" stroke-opacity="0.3"/>
+            <circle cx="50" cy="50" r="32" fill="url(#gradLogo)"/>
+            <path d="M35 56 C35 48 42 42 50 42 C56 42 61 45 63 50 C67 50 71 53 71 58 C71 63 67 66 62 66 L38 66 C33 66 30 62 30 58 C30 54 33 51 37 51" fill="#ffffff" fill-opacity="0.95"/>
+            <circle cx="58" cy="38" r="9" fill="#ffd166"/>
+            <defs>
+              <linearGradient id="gradLogo" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00f2fe"/>
+                <stop offset="1" stop-color="#4facfe"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="font-headline headline-sm fw-semibold tracking-tight text-primary-color m-0">
+            Aether<span class="text-cryo">Weather</span>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation Bar -->
+        <nav class="nav-hub-track d-none d-xl-flex align-items-center gap-1">
+          <a class="nav-hub-link active" data-nav-view="dashboard" href="#dashboard">Dashboard</a>
+          <a class="nav-hub-link" data-nav-view="radar" href="#radar">Interactive Radar &amp; Maps</a>
+          <a class="nav-hub-link" data-nav-view="forecast" href="#forecast">10-Day Forecast</a>
+          <a class="nav-hub-link" data-nav-view="air-quality" href="#air-quality">Air Quality &amp; Health</a>
+          <a class="nav-hub-link" data-nav-view="alerts" href="#alerts">
+            Severe Alerts
+            <span class="pulse-beacon amber ms-1"></span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Header Right Actions -->
+      <div class="d-flex align-items-center gap-2 gap-md-3">
+        
+        <!-- Search Trigger Input -->
+        <div class="search-wrapper d-none d-md-block trigger-search-palette" style="cursor: pointer;">
+          <span class="material-symbols-outlined search-icon-pos text-dim-outline">search</span>
+          <input type="text" placeholder="Search cities, coordinates..." readonly class="trigger-search-palette" style="cursor: pointer;">
+          <kbd class="kbd-shortcut">Ctrl+K</kbd>
+        </div>
+
+        <!-- Radar Status Chip -->
+        <div class="chip-online d-none d-lg-flex align-items-center gap-2">
+          <span class="pulse-beacon cyan"></span>
+          <span class="font-mono label-caps text-muted-variant m-0">Radar: Online</span>
+        </div>
+
+        <!-- Unit Switcher -->
+        <div class="unit-toggle-tray d-flex align-items-center">
+          <button type="button" class="unit-btn" data-unit="C">°C</button>
+          <button type="button" class="unit-btn active" data-unit="F">°F</button>
+        </div>
+
+        <!-- Severe Alerts Quick Bell -->
+        <button type="button" class="btn-icon-glass position-relative" data-nav-view="alerts" title="Weather Alerts">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="position-absolute top-0 end-0 translate-middle p-1 bg-warning border border-dark rounded-circle">
+            <span class="visually-hidden">New alerts</span>
+          </span>
+        </button>
+
+        <!-- User Profile Avatar -->
+        <div class="d-flex align-items-center">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZbVyJYrvbIUChMYjTBd3OkOELEGjflSyhHcm6EOWkOR5fFNVGsIsHj02nCHTHYUsj1N44AJIJvgCy9-zfWWJBlWud0gnaaxGsWoyWN09dpLwYQlhaUkOmCdrs2PGjaHh7SNxzlEICDN_kD1t30hdfu2Dfayuo5QkAEVBBMA6Z4GvxUApZztDziniCG3tHDHmRIVi5D3npVHGnihDRBm_DuDzJ7xuQInHxP0RKLyorlSMEtBUfH63e" alt="Meteorologist Profile" class="avatar-img">
+        </div>
+
+        <!-- Mobile Offcanvas Menu Toggle -->
+        <button class="btn-icon-glass d-xl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavOffcanvas" aria-controls="mobileNavOffcanvas" aria-label="Toggle Navigation">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Offcanvas Navigation Drawer -->
+  <div class="offcanvas offcanvas-end telemetry-offcanvas-pane text-light" tabindex="-1" id="mobileNavOffcanvas">
+    <div class="offcanvas-header border-bottom border-secondary border-opacity-25">
+      <div class="d-flex align-items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" style="width:28px;height:28px;">
+          <circle cx="50" cy="50" r="46" stroke="#00f2fe" stroke-width="4" stroke-opacity="0.3"/>
+          <circle cx="50" cy="50" r="32" fill="url(#gradLogoMob)"/>
+          <path d="M35 56 C35 48 42 42 50 42 C56 42 61 45 63 50 C67 50 71 53 71 58 C71 63 67 66 62 66 L38 66 C33 66 30 62 30 58 C30 54 33 51 37 51" fill="#ffffff"/>
+          <circle cx="58" cy="38" r="9" fill="#ffd166"/>
+          <defs><linearGradient id="gradLogoMob" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse"><stop stop-color="#00f2fe"/><stop offset="1" stop-color="#4facfe"/></linearGradient></defs>
+        </svg>
+        <span class="font-headline headline-sm text-primary-color">Aether<span class="text-cryo">Weather</span></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-col justify-content-between p-4">
+      <div class="d-flex flex-column gap-2">
+        <button class="btn btn-glass w-100 text-start mb-3 trigger-search-palette" data-bs-dismiss="offcanvas">
+          <span class="material-symbols-outlined text-dim-outline me-2">search</span> Search cities...
+        </button>
+        <a class="nav-hub-link active py-2 fs-6" data-nav-view="dashboard" href="#dashboard">Dashboard</a>
+        <a class="nav-hub-link py-2 fs-6" data-nav-view="radar" href="#radar">Interactive Radar &amp; Maps</a>
+        <a class="nav-hub-link py-2 fs-6" data-nav-view="forecast" href="#forecast">10-Day Forecast</a>
+        <a class="nav-hub-link py-2 fs-6" data-nav-view="air-quality" href="#air-quality">Air Quality &amp; Health</a>
+        <a class="nav-hub-link py-2 fs-6 d-flex align-items-center justify-content-between" data-nav-view="alerts" href="#alerts">
+          Severe Alerts
+          <span class="badge bg-warning text-dark">1 Active</span>
+        </a>
+      </div>
+      <div class="pt-4 border-top border-secondary border-opacity-25 font-mono label-caps text-dim-outline">
+        NEXRAD RADAR KHMB • DUAL-POL VCP-212
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Views Container -->
+  <main class="w-100 min-vh-100 pt-5 mt-4">
+    <div class="container-xxl py-3">
+
+      <!-- ====================================================================
+           VIEW 1: WEATHER DASHBOARD (Main Screen)
+           ==================================================================== -->
+      <section id="view-dashboard" class="view-section">
+        
+        <!-- Top Action Rail: Quick Location Switcher & Telemetry Sync Timestamp -->
+        <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3 mb-4">
+          <!-- Active Station & Quick City Selectors -->
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <div class="location-badge">
+              <span class="material-symbols-outlined text-cryo fs-5 filled">my_location</span>
+              <span class="font-headline fw-semibold text-on-surface" id="activeLocationName">San Francisco, CA</span>
+              <span class="font-mono label-caps text-dim-outline ms-1" id="activeLocationCode">US-W2</span>
+            </div>
+
+            <div class="quick-cities-pill-tray">
+              <button type="button" class="city-pill-btn active" data-city="sfo">
+                SFO • <span data-temp-f="68">68°</span>
+              </button>
+              <button type="button" class="city-pill-btn" data-city="tokyo">
+                Tokyo • <span data-temp-f="62">62°</span>
+              </button>
+              <button type="button" class="city-pill-btn" data-city="reykjavik">
+                Reykjavik • <span data-temp-f="38">38°</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sync Status & Doppler State -->
+          <div class="d-flex align-items-center gap-2 text-muted-variant">
+            <div class="telemetry-status-box d-flex align-items-center gap-2">
+              <span class="pulse-beacon cyan"></span>
+              <span class="font-mono label-caps text-on-surface">NEXRAD KHMB: Realtime Telemetry</span>
+              <span class="text-dim-outline">/</span>
+              <span class="font-mono label-data-md text-cyan-dim telemetry-utc-time">13:42:09 UTC</span>
+            </div>
+            <button type="button" class="btn-icon-glass telemetry-refresh-btn" title="Refresh Live Doppler Telemetry">
+              <span class="material-symbols-outlined fs-5">refresh</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tier 1: Asymmetric Hero Bento Grid (Hero Weather Display + Live Doppler Radar) -->
+        <div class="row g-4 mb-4">
+          
+          <!-- Primary Condition Glass Card (7 Cols) -->
+          <div class="col-12 col-xl-7">
+            <div class="glass-panel hero-primary-card p-4 h-100 d-flex flex-column justify-content-between">
+              <!-- Ambient Flares -->
+              <div class="flare-glow-cyan" style="top: -120px; left: -120px;"></div>
+              <div class="flare-glow-amber" style="bottom: -100px; right: -100px;"></div>
+
+              <div>
+                <!-- Upper Row: Subsystem Status & Badges -->
+                <div class="d-flex align-items-start justify-content-between mb-3 z-1">
+                  <div>
+                    <div class="font-mono label-caps text-cyan-dim tracking-widest" id="activeStationLabel">
+                      Atmospheric Station // Presidio 04
+                    </div>
+                    <h2 class="font-headline headline-sm fw-semibold text-on-surface mt-1 mb-0" id="activeAirflowLabel">
+                      Pacific Maritime Airflow
+                    </h2>
+                  </div>
+                  <a href="#alerts" data-nav-view="alerts" class="text-decoration-none">
+                    <div class="badge rounded-pill bg-warning bg-opacity-20 text-warning px-3 py-2 d-flex align-items-center gap-2 border border-warning border-opacity-25">
+                      <span class="pulse-beacon amber"></span>
+                      <span class="font-mono label-caps fw-bold">Gale Advisory Off-Shore</span>
+                    </div>
+                  </a>
+                </div>
+
+                <!-- Middle Row: Temperature Readout & Big Weather Icon Imagery -->
+                <div class="d-flex flex-column flex-md-row align-items-start align-items-md-end justify-content-between gap-3 my-3 z-1">
+                  <div>
+                    <div class="d-flex align-items-start">
+                      <span class="display-hero text-on-surface fw-light user-select-none" id="heroTemperature" data-temp-f="68" data-show-unit="false">68</span>
+                      <span class="display-hero headline-lg fw-light text-cyan-dim mt-2 current-unit-indicator">°F</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 mt-1">
+                      <span class="font-headline headline-md fw-medium text-on-surface" id="activeConditionText">Partly Cloudy &amp; Crisp</span>
+                      <span class="text-dim-outline">•</span>
+                      <span class="text-muted-variant">Feels like <strong class="text-on-surface" id="heroFeelsLike" data-temp-f="66">66°F</strong></span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 mt-2 text-body-sm">
+                      <span class="d-flex align-items-center gap-1 text-on-surface">
+                        <span class="material-symbols-outlined fs-6 text-amber">arrow_upward</span>
+                        High <span id="heroHighTemp" data-temp-f="72">72°F</span>
+                      </span>
+                      <span class="d-flex align-items-center gap-1 text-muted-variant">
+                        <span class="material-symbols-outlined fs-6 text-cryo">arrow_downward</span>
+                        Low <span id="heroLowTemp" data-temp-f="54">54°F</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Sun & Cloud Vector Construct -->
+                  <div class="sun-cloud-visual">
+                    <svg class="sun-cloud-svg" fill="none" viewBox="0 0 160 160">
+                      <!-- Radiant Sun Core -->
+                      <circle cx="96" cy="64" r="32" fill="url(#sunGlow)" opacity="0.9"></circle>
+                      <circle class="sun-orbit-spin text-secondary" cx="96" cy="64" r="42" stroke="currentColor" stroke-dasharray="4 6" stroke-width="1.5" opacity="0.4"></circle>
+                      <!-- Cloud Mass -->
+                      <path d="M48 116h76a26 26 0 0 0 8.2-50.7 34 34 0 0 0-66.4-9.3A28 28 0 0 0 48 116z" fill="#262A35" fill-opacity="0.85" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"></path>
+                      <!-- Condensation droplets -->
+                      <circle cx="68" cy="128" r="2.5" fill="#00f2fe" class="pulse-beacon cyan"></circle>
+                      <circle cx="86" cy="132" r="2" fill="#00f2fe" class="pulse-beacon cyan" style="animation-delay: 300ms;"></circle>
+                      <circle cx="104" cy="128" r="2.5" fill="#00f2fe" class="pulse-beacon cyan" style="animation-delay: 600ms;"></circle>
+                      <defs>
+                        <linearGradient id="sunGlow" x1="64" y1="32" x2="128" y2="96" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#FFDCBC"/>
+                          <stop offset="0.6" stop-color="#ED9000"/>
+                          <stop offset="1" stop-color="#93000A"/>
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Daylight Solar Arc Curve -->
+                <div class="solar-arc-tray mt-3 z-1">
+                  <div class="d-flex align-items-center justify-content-between mb-2 font-mono text-body-sm">
+                    <div class="d-flex align-items-center gap-1 text-on-surface">
+                      <span class="material-symbols-outlined text-amber fs-6">wb_sunny</span>
+                      <span>Dawn <strong>06:24 AM</strong></span>
+                    </div>
+                    <div class="label-caps text-dim-outline">Daylight 13h 24m Remaining</div>
+                    <div class="d-flex align-items-center gap-1 text-on-surface">
+                      <span>Dusk <strong>07:48 PM</strong></span>
+                      <span class="material-symbols-outlined text-amber-glow fs-6">nights_stay</span>
+                    </div>
+                  </div>
+                  <!-- Arc Visualization -->
+                  <div class="position-relative w-100">
+                    <svg class="solar-arc-svg" fill="none" viewBox="0 0 400 64">
+                      <line x1="10" y1="56" x2="390" y2="56" stroke="#3a494b" stroke-dasharray="2 3"></line>
+                      <path d="M 20 56 Q 200 -20 380 56" stroke="#3a494b" stroke-opacity="0.6" stroke-width="2"></path>
+                      <path d="M 20 56 Q 160 2 245 18" stroke="url(#solarPath)" stroke-width="3" stroke-linecap="round"></path>
+                      <circle cx="245" cy="18" r="6" fill="#ED9000" style="filter: drop-shadow(0 0 8px #ED9000);"></circle>
+                      <circle cx="245" cy="18" r="12" stroke="#ED9000" stroke-opacity="0.4" class="pulse-beacon amber"></circle>
+                      <defs>
+                        <linearGradient id="solarPath" x1="20" y1="56" x2="245" y2="18" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#FFB86B" stop-opacity="0.2"/>
+                          <stop offset="1" stop-color="#00F2FE"/>
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Telemetry Glance Ribbon (7 micro indicators) -->
+              <div class="micro-telemetry-grid mt-3 z-1">
+                <div class="micro-tile">
+                  <span class="font-mono label-caps text-dim-outline">UV INDEX</span>
+                  <span class="font-mono label-data-lg text-amber mt-1" id="telemetryUV">4</span>
+                  <span class="text-muted-variant text-body-sm" id="telemetryUVText">Moderate</span>
+                </div>
+                <div class="micro-tile">
+                  <span class="font-mono label-caps text-dim-outline">HUMIDITY</span>
+                  <span class="font-mono label-data-lg text-primary-color mt-1" id="telemetryHumidity">62%</span>
+                  <span class="text-muted-variant text-body-sm">Optimal</span>
+                </div>
+                <div class="micro-tile">
+                  <span class="font-mono label-caps text-dim-outline">WIND</span>
+                  <span class="font-mono label-data-lg text-on-surface mt-1" id="telemetryWind">14 mph</span>
+                  <span class="text-muted-variant text-body-sm" id="telemetryWindDir">WNW 290°</span>
+                </div>
+                <div class="micro-tile">
+                  <span class="font-mono label-caps text-dim-outline">DEW POINT</span>
+                  <span class="font-mono label-data-lg text-on-surface mt-1" id="telemetryDewPoint" data-temp-f="52">52°</span>
+                  <span class="text-muted-variant text-body-sm">Comfort</span>
+                </div>
+                <div class="micro-tile">
+                  <span class="font-mono label-caps text-dim-outline">AIR QUALITY</span>
+                  <span class="font-mono label-data-lg text-cyan-dim mt-1" id="telemetryAQI">32</span>
+                  <span class="text-cyan-dim text-body-sm" id="telemetryAQIStatus">Good (AQI)</span>
+                </div>
+                <div class="micro-tile">
+                  <span class="font-mono label-caps text-dim-outline">BAROMETER</span>
+                  <span class="font-mono label-data-lg text-on-surface mt-1">1014</span>
+                  <span class="text-muted-variant text-body-sm" id="telemetryBarometer">hPa • Steady</span>
+                </div>
+                <div class="micro-tile">
+                  <span class="font-mono label-caps text-dim-outline">VISIBILITY</span>
+                  <span class="font-mono label-data-lg text-on-surface mt-1" id="telemetryVisibility">10 mi</span>
+                  <span class="text-muted-variant text-body-sm">Clear Air</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Mini Live Doppler Radar Widget (5 Cols) -->
+          <div class="col-12 col-xl-5">
+            <div class="glass-panel p-4 h-100 d-flex flex-column justify-content-between">
+              
+              <!-- Radar Header -->
+              <div class="d-flex align-items-center justify-content-between mb-3 z-1">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="material-symbols-outlined text-cryo fs-5">radar</span>
+                  <h3 class="font-headline headline-sm text-on-surface m-0">Spatial Radar</h3>
+                  <span class="badge bg-secondary bg-opacity-25 text-cryo font-mono label-caps">LIVE BEAM</span>
+                </div>
+                <div class="d-flex align-items-center gap-1">
+                  <span class="pulse-beacon cyan"></span>
+                  <span class="font-mono label-data-md text-dim-outline" id="radarLocationTag">San Francisco Bay Area</span>
+                </div>
+              </div>
+
+              <!-- Radar Display Canvas -->
+              <div class="radar-mini-container my-2">
+                <!-- Underlay Map Image -->
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHV4XzyHPHPcG6bgt_SrYmCAU3WYr2kOsGuPSNHGKpe1ktMIOKhDMq8DCeDX4e10At42Z6fzJXqzVg9dKRxUAQNcEODSPBc22OnVq1KD9HooyGxXbkRUskgqQrQ60UClhQbN7k9VAvuHcJ5WQ-AZ2zKCr3KihHTshGLltLko1HLI7aQzF8W0vvp0PhbbyypIfmW7Jw-llbGcBXLXySbwUagVvHxpxM_y-pMN488PV_ltoKmpv-ZUBr" alt="San Francisco Doppler Radar Grid Underlay" class="radar-map-img">
+
+                <!-- Vector Doppler Storm Overlay -->
+                <svg class="radar-vector-overlay" viewBox="0 0 500 400" preserveAspectRatio="none">
+                  <defs>
+                    <radialGradient id="dopplerGrad1" cx="40%" cy="30%" r="50%">
+                      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.8"/>
+                      <stop offset="45%" stop-color="#00dce6" stop-opacity="0.5"/>
+                      <stop offset="70%" stop-color="#ed9000" stop-opacity="0.7"/>
+                      <stop offset="90%" stop-color="#ffb86b" stop-opacity="0.3"/>
+                      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+                    </radialGradient>
+                    <radialGradient id="dopplerGrad2" cx="70%" cy="65%" r="35%">
+                      <stop offset="0%" stop-color="#7318ff" stop-opacity="0.6"/>
+                      <stop offset="60%" stop-color="#00f2fe" stop-opacity="0.3"/>
+                      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+                    </radialGradient>
+                  </defs>
+
+                  <!-- Doppler Storm Band Clouds -->
+                  <path class="doppler-storm-cell" d="M 30,80 Q 120,40 220,110 T 360,190 Q 280,260 160,240 T 40,160 Z" fill="url(#dopplerGrad1)"></path>
+                  <path class="doppler-storm-cell" d="M 180,180 Q 260,140 340,210 T 420,310 Q 340,360 250,320 T 170,240 Z" fill="url(#dopplerGrad2)"></path>
+
+                  <!-- Concentric Range Rings -->
+                  <circle cx="250" cy="200" r="80" stroke="#00f2fe" stroke-opacity="0.3" stroke-width="0.75" stroke-dasharray="3 4" fill="none"></circle>
+                  <circle cx="250" cy="200" r="140" stroke="#00f2fe" stroke-opacity="0.2" stroke-width="0.75" stroke-dasharray="4 6" fill="none"></circle>
+                  <circle cx="250" cy="200" r="190" stroke="#00f2fe" stroke-opacity="0.15" stroke-width="0.5" fill="none"></circle>
+
+                  <!-- Rotating Radar Sweep Line & Beam -->
+                  <g class="radar-sweep-beam">
+                    <line x1="250" y1="200" x2="430" y2="70" stroke="#00f2fe" stroke-width="1.5" stroke-opacity="0.8"></line>
+                    <polygon points="250,200 430,70 410,30" fill="#00f2fe" fill-opacity="0.12"></polygon>
+                  </g>
+
+                  <!-- Active Radar Station Center -->
+                  <circle cx="250" cy="200" r="4" fill="#00f2fe" style="filter: drop-shadow(0 0 8px #00F2FE);"></circle>
+                </svg>
+
+                <!-- Radar Metadata Floating Badges -->
+                <div class="position-absolute top-2 start-2 d-flex flex-column gap-1 p-2">
+                  <span class="font-mono label-caps radar-meta-badge text-on-surface">dBZ: 42 (Moderate Rain Front)</span>
+                  <span class="font-mono label-caps radar-meta-badge text-dim-outline">Echo Tops: FL240</span>
+                </div>
+
+                <!-- Radar Legend Floating Bottom -->
+                <div class="position-absolute bottom-2 start-2 end-2 d-flex align-items-center justify-content-between radar-legend-bar">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="font-mono label-caps text-dim-outline">PRECIP</span>
+                    <div class="radar-precip-scale"></div>
+                  </div>
+                  <span class="font-mono label-caps text-amber fw-semibold">Rain ETA ~48 min</span>
+                </div>
+              </div>
+
+              <!-- Radar Controls: Scrubber & CTA -->
+              <div class="d-flex align-items-center justify-content-between gap-3 pt-2 z-1">
+                <div class="d-flex align-items-center gap-2">
+                  <button type="button" class="btn-icon-glass" id="radarPlayPauseBtn" title="Play Doppler Radar Loop">
+                    <span class="material-symbols-outlined fs-5">play_arrow</span>
+                  </button>
+                  <div>
+                    <div class="font-mono label-data-md text-on-surface" id="radarScrubberTime">NOW</div>
+                    <div class="font-mono label-caps text-dim-outline">Doppler Loop</div>
+                  </div>
+                </div>
+
+                <a href="#radar" data-nav-view="radar" class="btn-cryo">
+                  <span>Open Full Interactive Radar</span>
+                  <span class="material-symbols-outlined fs-6">open_in_new</span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tier 2: 24-Hour Scannable Hourly Forecast Track -->
+        <div class="glass-panel p-4 mb-4">
+          <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2 mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-cryo fs-5">schedule</span>
+              <h3 class="font-headline headline-sm text-on-surface m-0">24-Hour Detailed Telemetry Vector</h3>
+              <span class="font-mono label-caps text-dim-outline d-none d-md-inline ms-2">Temperature • Precipitation Chance • Wind Velocity</span>
+            </div>
+            <div class="d-flex align-items-center gap-3 font-mono text-body-sm text-muted-variant">
+              <span class="d-flex align-items-center gap-1">
+                <span class="d-inline-block rounded-pill bg-info" style="width:10px;height:4px;"></span> Rain%
+              </span>
+              <span class="d-flex align-items-center gap-1">
+                <span class="d-inline-block rounded-pill bg-warning" style="width:10px;height:4px;"></span> Temp°
+              </span>
+            </div>
+          </div>
+
+          <!-- Hourly Snap Track -->
+          <div class="hourly-scroll-track pb-2">
+            <!-- Slot 1: NOW -->
+            <div class="hourly-card active-slot">
+              <span class="font-mono label-caps text-cyan-dim fw-bold">NOW</span>
+              <span class="material-symbols-outlined text-amber fs-3 my-1">wb_sunny</span>
+              <span class="font-headline headline-sm fw-bold text-on-surface" data-temp-f="68">68°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-dim-outline mb-1">0%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 0%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">14 mph</span>
+            </div>
+
+            <!-- Slot 2: 2 PM -->
+            <div class="hourly-card">
+              <span class="font-mono label-caps text-muted-variant">2:00 PM</span>
+              <span class="material-symbols-outlined text-amber fs-3 my-1">partly_cloudy_day</span>
+              <span class="font-headline headline-sm fw-medium text-on-surface" data-temp-f="70">70°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-cyan-dim mb-1">5%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 5%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">15 mph</span>
+            </div>
+
+            <!-- Slot 3: 3 PM -->
+            <div class="hourly-card">
+              <span class="font-mono label-caps text-muted-variant">3:00 PM</span>
+              <span class="material-symbols-outlined text-amber fs-3 my-1">partly_cloudy_day</span>
+              <span class="font-headline headline-sm fw-semibold text-amber" data-temp-f="72">72°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-cyan-dim mb-1">15%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 15%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">17 mph</span>
+            </div>
+
+            <!-- Slot 4: 4 PM -->
+            <div class="hourly-card">
+              <span class="font-mono label-caps text-muted-variant">4:00 PM</span>
+              <span class="material-symbols-outlined text-dim-outline fs-3 my-1">cloud</span>
+              <span class="font-headline headline-sm fw-medium text-on-surface" data-temp-f="69">69°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-cryo mb-1">40%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 40%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">19 mph</span>
+            </div>
+
+            <!-- Slot 5: 5 PM Peak Rain -->
+            <div class="hourly-card peak-rain-slot">
+              <span class="font-mono label-caps text-cryo fw-bold">5:00 PM</span>
+              <span class="material-symbols-outlined text-cryo fs-3 my-1">rainy</span>
+              <span class="font-headline headline-sm fw-bold text-on-surface" data-temp-f="65">65°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-cryo fw-bold mb-1">75%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 75%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-cryo mt-2">22 mph</span>
+            </div>
+
+            <!-- Slot 6: 6 PM -->
+            <div class="hourly-card peak-rain-slot">
+              <span class="font-mono label-caps text-cryo">6:00 PM</span>
+              <span class="material-symbols-outlined text-cryo fs-3 my-1">rainy</span>
+              <span class="font-headline headline-sm fw-medium text-on-surface" data-temp-f="63">63°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-cryo mb-1">80%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 80%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-cryo mt-2">20 mph</span>
+            </div>
+
+            <!-- Slot 7: 7 PM Sunset -->
+            <div class="hourly-card">
+              <span class="font-mono label-caps text-muted-variant">7:00 PM</span>
+              <span class="material-symbols-outlined text-amber fs-3 my-1">nights_stay</span>
+              <span class="font-headline headline-sm fw-medium text-on-surface" data-temp-f="60">60°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-cyan-dim mb-1">30%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 30%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">16 mph</span>
+            </div>
+
+            <!-- Slot 8: 8 PM -->
+            <div class="hourly-card">
+              <span class="font-mono label-caps text-muted-variant">8:00 PM</span>
+              <span class="material-symbols-outlined text-dim-outline fs-3 my-1">cloud</span>
+              <span class="font-headline headline-sm fw-medium text-on-surface" data-temp-f="58">58°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-dim-outline mb-1">10%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 10%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">14 mph</span>
+            </div>
+
+            <!-- Slot 9: 9 PM -->
+            <div class="hourly-card">
+              <span class="font-mono label-caps text-muted-variant">9:00 PM</span>
+              <span class="material-symbols-outlined text-primary-color fs-3 my-1">nights_stay</span>
+              <span class="font-headline headline-sm fw-medium text-on-surface" data-temp-f="57">57°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-dim-outline mb-1">0%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 0%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">12 mph</span>
+            </div>
+
+            <!-- Slot 10: 10 PM -->
+            <div class="hourly-card">
+              <span class="font-mono label-caps text-muted-variant">10:00 PM</span>
+              <span class="material-symbols-outlined text-primary-color fs-3 my-1">nights_stay</span>
+              <span class="font-headline headline-sm fw-medium text-on-surface" data-temp-f="56">56°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-dim-outline mb-1">0%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 0%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">10 mph</span>
+            </div>
+
+            <!-- Slot 11: 11 PM -->
+            <div class="hourly-card">
+              <span class="font-mono label-caps text-muted-variant">11:00 PM</span>
+              <span class="material-symbols-outlined text-dim-outline fs-3 my-1">foggy</span>
+              <span class="font-headline headline-sm fw-medium text-on-surface" data-temp-f="55">55°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-dim-outline mb-1">0%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 0%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">9 mph</span>
+            </div>
+
+            <!-- Slot 12: 12 AM -->
+            <div class="hourly-card">
+              <span class="font-mono label-caps text-muted-variant">12:00 AM</span>
+              <span class="material-symbols-outlined text-primary-color fs-3 my-1">clear_night</span>
+              <span class="font-headline headline-sm fw-medium text-on-surface" data-temp-f="53">53°</span>
+              <div class="w-100 mt-2">
+                <div class="font-mono label-caps text-dim-outline mb-1">0%</div>
+                <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 0%;"></div></div>
+              </div>
+              <span class="font-mono label-data-md text-muted-variant mt-2">8 mph</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tier 3: Essential Telemetry Quad-Grid (4 Deep Glass Cards) -->
+        <div class="row g-4 mb-4">
+          
+          <!-- Card 1: Precipitation Outlook (60-Min Vector) -->
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="glass-panel p-4 h-100 d-flex flex-column justify-content-between">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="material-symbols-outlined text-cryo fs-5">water_drop</span>
+                  <span class="font-headline fw-semibold text-on-surface">Precipitation Outlook</span>
+                </div>
+                <span class="badge bg-secondary bg-opacity-25 text-cryo font-mono label-caps">60 MIN</span>
+              </div>
+
+              <div class="my-3">
+                <div class="d-flex align-items-baseline justify-content-between mb-1">
+                  <span class="font-headline headline-md fw-semibold text-primary-color">0.14 <span class="fs-6 fw-normal text-dim-outline">in/hr</span></span>
+                  <span class="text-body-sm text-cyan-dim">Light rain starts in 22m</span>
+                </div>
+
+                <!-- 60-Minute Micro Bar Chart (12 Bars) -->
+                <div class="sparkbar-chart-track">
+                  <div class="sparkbar-bar" style="height: 6%;"></div>
+                  <div class="sparkbar-bar" style="height: 6%;"></div>
+                  <div class="sparkbar-bar" style="height: 8%;"></div>
+                  <div class="sparkbar-bar" style="height: 12%;"></div>
+                  <div class="sparkbar-bar rising" style="height: 32%;"></div>
+                  <div class="sparkbar-bar rising" style="height: 60%;"></div>
+                  <div class="sparkbar-bar active" style="height: 88%;"></div>
+                  <div class="sparkbar-bar active" style="height: 100%;"></div>
+                  <div class="sparkbar-bar rising" style="height: 75%;"></div>
+                  <div class="sparkbar-bar rising" style="height: 52%;"></div>
+                  <div class="sparkbar-bar" style="height: 35%;"></div>
+                  <div class="sparkbar-bar" style="height: 18%;"></div>
+                </div>
+
+                <div class="d-flex justify-content-between font-mono label-caps text-dim-outline mt-2">
+                  <span>Now</span>
+                  <span>+20m</span>
+                  <span>+40m</span>
+                  <span>+60m</span>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between p-2 rounded glass-panel-subtle text-body-sm">
+                <span class="text-muted-variant">Total 24h Accum.:</span>
+                <span class="text-on-surface fw-semibold font-mono">0.42 in</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Wind & Dynamic Gusts (Compass Vector Dial) -->
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="glass-panel p-4 h-100 d-flex flex-column justify-content-between">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-color fs-5">air</span>
+                  <span class="font-headline fw-semibold text-on-surface">Wind &amp; Gusts</span>
+                </div>
+                <span class="badge bg-secondary bg-opacity-25 text-dim-outline font-mono label-caps">290° WNW</span>
+              </div>
+
+              <div class="my-3 d-flex align-items-center justify-content-around">
+                <!-- Compass SVG Graphic -->
+                <div class="compass-box">
+                  <svg class="compass-svg" viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="54" stroke="#3a494b" stroke-width="1.5" fill="none"></circle>
+                    <text x="60" y="18" fill="#00dce6" text-anchor="middle" class="font-mono label-caps">N</text>
+                    <text x="106" y="64" fill="#849495" text-anchor="middle" class="font-mono label-caps">E</text>
+                    <text x="60" y="110" fill="#849495" text-anchor="middle" class="font-mono label-caps">S</text>
+                    <text x="16" y="64" fill="#849495" text-anchor="middle" class="font-mono label-caps">W</text>
+                    
+                    <!-- Needle Rotated 290 deg -->
+                    <g transform="rotate(290 60 60)">
+                      <polygon points="60,20 54,60 66,60" fill="#00f2fe" style="filter: drop-shadow(0 0 8px #00F2FE);"></polygon>
+                      <polygon points="60,100 55,60 65,60" fill="#3a494b"></polygon>
+                      <circle cx="60" cy="60" r="4" fill="#313440"></circle>
+                    </g>
+                  </svg>
+                </div>
+
+                <div>
+                  <div class="font-mono label-caps text-dim-outline">Sustained</div>
+                  <div class="d-flex align-items-baseline gap-1">
+                    <span class="font-headline headline-lg fw-bold text-on-surface">14</span>
+                    <span class="font-mono text-dim-outline">mph</span>
+                  </div>
+                  <div class="mt-2">
+                    <div class="font-mono label-caps text-amber">Peak Gusts</div>
+                    <div class="d-flex align-items-baseline gap-1">
+                      <span class="font-headline headline-md fw-semibold text-amber">22</span>
+                      <span class="font-mono text-dim-outline">mph</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between p-2 rounded glass-panel-subtle text-body-sm">
+                <span class="text-muted-variant">Direction:</span>
+                <span class="text-on-surface fw-semibold font-mono">West-Northwest</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Solar Exposure & UV -->
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="glass-panel p-4 h-100 d-flex flex-column justify-content-between">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="material-symbols-outlined text-amber fs-5">light_mode</span>
+                  <span class="font-headline fw-semibold text-on-surface">Solar Exposure &amp; UV</span>
+                </div>
+                <span class="badge bg-warning bg-opacity-25 text-amber font-mono label-caps">MODERATE</span>
+              </div>
+
+              <div class="my-3">
+                <div class="d-flex align-items-end justify-content-between">
+                  <div>
+                    <div class="font-headline headline-lg fw-bold text-amber lh-1">4.2</div>
+                    <div class="text-muted-variant text-body-sm mt-1">Index peaks at 1:30 PM</div>
+                  </div>
+                  <span class="material-symbols-outlined fs-1 text-amber opacity-50">wb_incandescent</span>
+                </div>
+
+                <!-- Gradient Track with Marker -->
+                <div class="mt-3">
+                  <div class="uv-gradient-track">
+                    <div class="uv-pin-marker" style="left: 36%;"></div>
+                  </div>
+                  <div class="d-flex justify-content-between font-mono label-caps text-dim-outline mt-2">
+                    <span>0 Low</span>
+                    <span>6 High</span>
+                    <span>11+ Extr</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between p-2 rounded glass-panel-subtle text-body-sm">
+                <span class="text-muted-variant">Protection:</span>
+                <span class="text-on-surface fw-semibold font-mono">SPF 30+ (Till 3:45 PM)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Moon Phase & Tides -->
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="glass-panel p-4 h-100 d-flex flex-column justify-content-between">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="material-symbols-outlined text-violet fs-5">bedtime</span>
+                  <span class="font-headline fw-semibold text-on-surface">Moon Phase &amp; Tides</span>
+                </div>
+                <span class="badge bg-info bg-opacity-25 text-violet font-mono label-caps">WAXING GIBBOUS</span>
+              </div>
+
+              <div class="my-3 d-flex align-items-center justify-content-between gap-3">
+                <!-- Stylized Moon Graphic -->
+                <div class="moon-sphere">
+                  <div class="moon-illuminated"></div>
+                </div>
+
+                <div>
+                  <div class="font-headline headline-sm fw-semibold text-violet">78% Illumination</div>
+                  <div class="text-dim-outline text-body-sm mt-1">Moonset: 03:12 AM</div>
+                  <div class="d-flex align-items-center gap-1 text-body-sm mt-2">
+                    <span class="material-symbols-outlined text-cryo fs-6">waves</span>
+                    <span>High: <strong class="text-cyan-dim">3:15 PM (+4.8ft)</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between p-2 rounded glass-panel-subtle text-body-sm">
+                <span class="text-muted-variant">Low Tide Vector:</span>
+                <span class="text-on-surface fw-semibold font-mono">9:48 PM (+0.9 ft)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tier 4: Monitored Atmospheric Stations (3 Cards) -->
+        <div class="glass-panel p-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-dim-outline fs-5">stars</span>
+              <h3 class="font-headline headline-sm text-on-surface m-0">Monitored Atmospheric Stations</h3>
+            </div>
+            <a href="#forecast" data-nav-view="forecast" class="text-cyan-dim text-decoration-none text-body-sm">
+              Manage Presets &rarr;
+            </a>
+          </div>
+
+          <div class="row g-3">
+            <!-- Station 1: New York -->
+            <div class="col-12 col-md-4">
+              <div class="station-tile d-flex align-items-center justify-content-between" data-station-city="newyork">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="station-icon-avatar text-cryo">
+                    <span class="material-symbols-outlined fs-3">rainy</span>
+                  </div>
+                  <div>
+                    <div class="font-headline fw-semibold text-on-surface fs-6">New York</div>
+                    <div class="text-dim-outline text-body-sm">EDT • Passing Squall</div>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <div class="font-headline headline-md fw-bold text-on-surface" data-temp-f="74">74°</div>
+                  <div class="font-mono label-caps text-cryo">Rain 90%</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Station 2: London -->
+            <div class="col-12 col-md-4">
+              <div class="station-tile d-flex align-items-center justify-content-between" data-station-city="london">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="station-icon-avatar text-dim-outline">
+                    <span class="material-symbols-outlined fs-3">cloud</span>
+                  </div>
+                  <div>
+                    <div class="font-headline fw-semibold text-on-surface fs-6">London</div>
+                    <div class="text-dim-outline text-body-sm">BST • Dense Overcast</div>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <div class="font-headline headline-md fw-bold text-on-surface" data-temp-f="58">58°</div>
+                  <div class="font-mono label-caps text-dim-outline">Precip 15%</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Station 3: Tokyo -->
+            <div class="col-12 col-md-4">
+              <div class="station-tile d-flex align-items-center justify-content-between" data-station-city="tokyo">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="station-icon-avatar text-amber">
+                    <span class="material-symbols-outlined fs-3">clear_night</span>
+                  </div>
+                  <div>
+                    <div class="font-headline fw-semibold text-on-surface fs-6">Tokyo</div>
+                    <div class="text-dim-outline text-body-sm">JST • Crisp Clear Sky</div>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <div class="font-headline headline-md fw-bold text-on-surface" data-temp-f="62">62°</div>
+                  <div class="font-mono label-caps text-amber">Precip 0%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ====================================================================
+           VIEW 2: INTERACTIVE RADAR & MAPS
+           ==================================================================== -->
+      <section id="view-radar" class="view-section d-none">
+        
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3">
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="font-mono label-caps text-cryo">NEXRAD KHMB GIS DOME</span>
+              <span class="pulse-beacon cyan"></span>
+              <span class="font-mono label-caps text-dim-outline">HIGH-RESOLUTION SCAN</span>
+            </div>
+            <h1 class="font-headline headline-lg text-primary-color m-0">Interactive Spatial Radar &amp; Maps</h1>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-glass d-flex align-items-center gap-1" data-bs-toggle="offcanvas" data-bs-target="#telemetryDrawer">
+              <span class="material-symbols-outlined fs-5">insights</span>
+              <span>Station Telemetry Feed</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Full Radar Viewport Canvas -->
+        <div class="radar-full-viewport mb-4">
+          
+          <!-- Top Floating Layer Switcher Tray -->
+          <div class="radar-floating-top-bar">
+            <div class="layer-switcher-tray">
+              <button type="button" class="layer-btn active" data-layer="doppler">
+                <span class="material-symbols-outlined fs-5">radar</span>
+                <span>Doppler Radar</span>
+                <span class="pulse-beacon cyan ms-1"></span>
+              </button>
+              <button type="button" class="layer-btn" data-layer="satellite">
+                <span class="material-symbols-outlined fs-5">filter_drama</span>
+                <span>Satellite (IR)</span>
+              </button>
+              <button type="button" class="layer-btn" data-layer="wind">
+                <span class="material-symbols-outlined fs-5">air</span>
+                <span>Wind Flow</span>
+              </button>
+              <button type="button" class="layer-btn" data-layer="precip">
+                <span class="material-symbols-outlined fs-5">weather_mix</span>
+                <span>Precip Type</span>
+              </button>
+              <button type="button" class="layer-btn" data-layer="heatmap">
+                <span class="material-symbols-outlined fs-5">thermostat</span>
+                <span>Thermal Heat</span>
+              </button>
+              <button type="button" class="layer-btn text-amber" data-layer="cells">
+                <span class="material-symbols-outlined fs-5">warning</span>
+                <span>Storm Cells</span>
+                <span class="badge bg-warning bg-opacity-25 text-amber ms-1">2</span>
+              </button>
+            </div>
+
+            <!-- Sweep Spec Box -->
+            <div class="d-none d-lg-flex align-items-center gap-3 px-3 py-2 rounded-3 glass-panel-subtle">
+              <div>
+                <div class="font-mono label-caps text-dim-outline">SWEEP MODE</div>
+                <div class="font-mono label-data-md text-primary-color fw-semibold">Dual-Pol VCP-212</div>
+              </div>
+              <div class="vr bg-secondary opacity-25"></div>
+              <div>
+                <div class="font-mono label-caps text-dim-outline">REFRESH</div>
+                <div class="font-mono label-data-md text-cyan-dim">Every 42s</div>
+              </div>
+              <div class="vr bg-secondary opacity-25"></div>
+              <div>
+                <div class="font-mono label-caps text-dim-outline">ALTITUDE CUT</div>
+                <div class="font-mono label-data-md text-on-surface">0.5° Base Tilt</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vertical Dock Controls on Right -->
+          <div class="radar-dock-controls">
+            <div class="dock-btn-group">
+              <button type="button" class="dock-btn" id="radarZoomInBtn" title="Zoom In">
+                <span class="material-symbols-outlined fs-5">add</span>
+              </button>
+              <button type="button" class="dock-btn" id="radarZoomOutBtn" title="Zoom Out">
+                <span class="material-symbols-outlined fs-5">remove</span>
+              </button>
+              <hr class="my-1 border-secondary border-opacity-25">
+              <button type="button" class="dock-btn text-cryo" id="radarCenterBtn" title="Center Location">
+                <span class="material-symbols-outlined fs-5">my_location</span>
+              </button>
+              <button type="button" class="dock-btn" title="Perspective Angle">
+                <span class="material-symbols-outlined fs-5">view_in_ar</span>
+              </button>
+            </div>
+
+            <!-- Vertical Opacity Slider -->
+            <div class="dock-btn-group p-2 align-items-center text-center">
+              <span class="material-symbols-outlined text-dim-outline fs-6">opacity</span>
+              <input type="range" class="radar-scrubber-slider my-2" id="radarOpacitySlider" min="20" max="100" value="85" style="width: 50px; transform: rotate(-90deg);" title="Radar Layer Opacity">
+              <span class="font-mono label-caps text-muted-variant mt-3" style="font-size: 8px;">OPAC</span>
+            </div>
+          </div>
+
+          <!-- Detailed Coastal GIS SVG Canvas -->
+          <svg id="fullRadarSvg" class="radar-map-canvas" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="oceanGlowFull" cx="42%" cy="50%" r="65%">
+                <stop offset="0%" stop-color="#091426"/>
+                <stop offset="100%" stop-color="#04070e"/>
+              </radialGradient>
+              <filter id="radarBloomFull" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+              <linearGradient id="streamlineFadeFull" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f2fe" stop-opacity="0"/>
+                <stop offset="50%" stop-color="#00f2fe" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="#7318ff" stop-opacity="0"/>
+              </linearGradient>
+              <pattern id="radarGridPattern" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#1c263d" stroke-width="0.75" stroke-dasharray="2 4"/>
+              </pattern>
+            </defs>
+
+            <!-- Ocean Base Plane -->
+            <rect width="1600" height="1000" fill="url(#oceanGlowFull)"></rect>
+            <rect width="1600" height="1000" fill="url(#radarGridPattern)" opacity="0.6"></rect>
+
+            <!-- Bathymetry Contour Lines -->
+            <g fill="none" stroke="#13213b" stroke-width="1" opacity="0.45">
+              <path d="M-50,220 C240,260 410,480 430,750 C440,880 390,980 380,1050"></path>
+              <path d="M-80,450 C180,480 320,620 340,900"></path>
+              <path d="M220,-40 C340,180 580,240 720,290"></path>
+            </g>
+
+            <!-- Coastal Geography Landmasses -->
+            <g fill="#0e172a" stroke="#1f2d47" stroke-width="1.5">
+              <!-- Marin & North Bay Coastline -->
+              <path d="M-20,-40 L620,-40 L600,120 C570,160 520,210 490,260 C460,310 440,340 430,360 C420,380 405,395 380,398 C360,400 340,385 330,360 C320,330 310,300 280,270 C240,230 180,210 130,220 C80,230 -20,280 -40,300 Z"></path>
+              <!-- San Francisco Peninsula -->
+              <path d="M375,445 C395,448 425,460 440,490 C460,530 475,590 490,670 C510,770 540,860 560,940 C575,1000 580,1040 580,1050 L260,1050 C240,960 230,860 240,760 C250,660 260,570 280,510 C300,455 335,442 375,445 Z"></path>
+              <!-- East Bay Shoreline -->
+              <path d="M590,180 C630,200 680,240 730,300 C780,360 810,440 820,530 C830,620 810,720 780,820 C750,910 710,990 690,1050 L1650,1050 L1650,-40 L700,-40 C670,20 630,90 590,180 Z"></path>
+            </g>
+
+            <!-- Major Bay Bridges -->
+            <g stroke="#2c3e60" stroke-width="2" stroke-dasharray="3 3">
+              <line x1="380" y1="398" x2="375" y2="445"></line> <!-- Golden Gate -->
+              <line x1="440" y1="490" x2="680" y2="440"></line> <!-- Bay Bridge -->
+              <line x1="510" y1="770" x2="780" y2="720"></line> <!-- San Mateo -->
+            </g>
+
+            <!-- Station Range Rings -->
+            <g fill="none" stroke="#00f2fe" stroke-opacity="0.15" stroke-width="1">
+              <circle cx="460" cy="580" r="140" stroke-dasharray="4 6"></circle>
+              <circle cx="460" cy="580" r="280" stroke-dasharray="4 8"></circle>
+              <circle cx="460" cy="580" r="440" stroke-dasharray="6 12"></circle>
+              <line x1="460" y1="140" x2="460" y2="1020" stroke-dasharray="2 6"></line>
+              <line x1="20" y1="580" x2="900" y2="580" stroke-dasharray="2 6"></line>
+            </g>
+
+            <!-- High-Res Doppler Storm Bands -->
+            <g id="radarDopplerLayer" filter="url(#radarBloomFull)">
+              <!-- Light Echoes (Teal) -->
+              <path class="doppler-storm-cell" d="M310,320 C380,300 480,330 520,380 C560,430 530,510 470,550 C410,590 330,560 290,490 C250,420 270,340 310,320 Z" fill="#00e699" opacity="0.38"></path>
+              <!-- Moderate Echoes (Amber) -->
+              <path class="doppler-storm-cell" d="M340,360 C390,340 450,360 480,410 C500,450 480,500 440,520 C400,540 350,520 330,470 C310,420 320,380 340,360 Z" fill="#ffb800" opacity="0.55"></path>
+              <!-- Severe Core SF-204 (Crimson / Violet) -->
+              <path class="doppler-storm-cell" d="M370,390 C410,370 440,390 460,430 C470,460 450,490 420,500 C390,510 365,490 355,460 C345,430 355,400 370,390 Z" fill="#ff3838" opacity="0.85"></path>
+              <ellipse class="doppler-storm-cell" cx="405" cy="445" rx="22" ry="18" fill="#e9ddff" opacity="0.9"></ellipse>
+              <!-- Cold Front Arc NW -->
+              <path class="doppler-storm-cell" d="M120,80 C260,140 360,260 410,410 C430,470 420,560 380,660 C340,750 280,820 180,890 L130,860 C220,790 280,720 310,630 C340,540 350,460 330,410 C300,310 220,200 90,130 Z" fill="#00dce6" opacity="0.4"></path>
+              <path class="doppler-storm-cell" d="M160,140 C270,210 330,310 350,430 C360,490 340,580 300,670 L260,650 C290,570 310,500 295,440 C280,360 230,260 140,190 Z" fill="#ed9000" opacity="0.6"></path>
+            </g>
+
+            <!-- Animated Wind Streamlines -->
+            <g id="radarWindStreamlines" fill="none" stroke="url(#streamlineFadeFull)" stroke-width="1.75" stroke-linecap="round">
+              <path d="M100,280 C220,290 320,350 420,440" stroke-dasharray="14 18" class="pulse-beacon cyan"></path>
+              <path d="M140,380 C260,390 360,460 460,530" stroke-dasharray="16 20"></path>
+              <path d="M200,480 C320,500 420,570 510,650" stroke-dasharray="18 22"></path>
+              <path d="M280,590 C390,620 480,700 580,790" stroke-dasharray="14 20"></path>
+              <path d="M60,180 C180,210 280,280 380,370" stroke-dasharray="20 24"></path>
+            </g>
+
+            <!-- Storm Cell Vector Forecast Track -->
+            <polyline points="405,445 460,430 520,410 590,385" fill="none" stroke="#ffb86b" stroke-width="2.5" stroke-dasharray="6 4"></polyline>
+            <circle cx="460" cy="430" r="3.5" fill="#ffb86b"></circle>
+            <circle cx="520" cy="410" r="3.5" fill="#ffb86b"></circle>
+            <circle cx="590" cy="385" r="5" fill="#ed9000"></circle>
+          </svg>
+
+          <!-- Interactive Storm Cell Marker Overlay -->
+          <div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center gap-2" style="margin-left: -120px; margin-top: -60px; z-index: 10;">
+            <span class="pulse-beacon amber" style="width:12px;height:12px;"></span>
+            <div class="radar-station-pin d-flex align-items-center gap-2">
+              <span class="text-amber fw-bold font-mono">CELL #SF-204</span>
+              <span class="text-primary-color font-mono fw-semibold">54 dBZ</span>
+              <span class="material-symbols-outlined text-amber fs-6">north_east</span>
+            </div>
+          </div>
+
+          <!-- Sensor Station Pins Over Canvas -->
+          <div class="position-absolute" style="top: 48%; left: 39%; z-index: 10;">
+            <div class="radar-station-pin d-flex align-items-center gap-1">
+              <span class="pulse-beacon cyan" style="width:6px;height:6px;"></span>
+              <span>DOWNTOWN SF</span>
+              <span class="text-cyan-dim" data-temp-f="59">59°</span>
+            </div>
+          </div>
+          <div class="position-absolute" style="top: 59%; left: 45%; z-index: 10;">
+            <div class="radar-station-pin d-flex align-items-center gap-1">
+              <span class="pulse-beacon cyan" style="width:6px;height:6px;"></span>
+              <span>KSFO RADAR</span>
+              <span class="text-cyan-dim" data-temp-f="56">56°</span>
+            </div>
+          </div>
+          <div class="position-absolute" style="top: 37%; left: 33%; z-index: 10;">
+            <div class="radar-station-pin d-flex align-items-center gap-1">
+              <span class="pulse-beacon cyan" style="width:6px;height:6px;"></span>
+              <span>PRESIDIO HEADS</span>
+              <span class="text-cyan-dim" data-temp-f="54">54°</span>
+            </div>
+          </div>
+          <div class="position-absolute" style="top: 44%; left: 64%; z-index: 10;">
+            <div class="radar-station-pin d-flex align-items-center gap-1">
+              <span class="pulse-beacon amber" style="width:6px;height:6px;"></span>
+              <span>OAKLAND HARBOR</span>
+              <span class="text-amber" data-temp-f="61">61°</span>
+            </div>
+          </div>
+
+          <!-- Bottom Player Bar -->
+          <div class="radar-bottom-player-bar">
+            <div class="d-flex align-items-center gap-3">
+              <button type="button" class="btn-icon-glass" id="fullRadarPlayPauseBtn" title="Play / Pause Radar Loop">
+                <span class="material-symbols-outlined fs-5">play_arrow</span>
+              </button>
+              <div>
+                <div class="font-mono label-data-md text-on-surface fw-bold" id="fullRadarScrubberTime">NOW</div>
+                <div class="font-mono label-caps text-dim-outline">Radar Composite Timeline</div>
+              </div>
+            </div>
+
+            <!-- Timeline Scrubber -->
+            <input type="range" class="radar-scrubber-slider mx-3" id="fullRadarTimelineScrubber" min="0" max="7" value="3" step="1">
+
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-secondary bg-opacity-25 text-dim-outline font-mono label-caps">-15m / +45m</span>
+              <button class="btn btn-glass btn-sm" onclick="alert('Radar frame exported to cache.')">
+                <span class="material-symbols-outlined fs-6 me-1">download</span> Export
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Telemetry Feed Offcanvas Drawer (Right) -->
+        <div class="offcanvas offcanvas-end telemetry-offcanvas-pane text-light" tabindex="-1" id="telemetryDrawer" style="width: 400px;">
+          <div class="offcanvas-header border-bottom border-secondary border-opacity-25">
+            <div>
+              <div class="font-mono label-caps text-cyan-dim">KHMB DOPPLER ARRAY</div>
+              <h5 class="offcanvas-title font-headline text-on-surface">Radar Telemetry Stream</h5>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body p-4">
+            <div class="glass-panel p-3 mb-3">
+              <div class="font-mono label-caps text-dim-outline">PRIMARY RADAR VECTOR</div>
+              <div class="font-headline headline-sm text-primary-color mt-1">Azimuth 294° @ 14 nm</div>
+              <p class="text-body-sm text-muted-variant mt-2 mb-0">Incoming precipitation cluster moving at 18 knots East-Southeast. Marine layer ceiling currently at 1,400 ft MSL.</p>
+            </div>
+
+            <div class="glass-panel p-3 mb-3">
+              <div class="font-mono label-caps text-amber">ACTIVE STORM CELL #SF-204</div>
+              <ul class="list-unstyled font-mono text-body-sm mt-2 mb-0 space-y-1">
+                <li class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                  <span class="text-dim-outline">Peak Core Reflectivity:</span>
+                  <span class="text-danger fw-bold">54 dBZ</span>
+                </li>
+                <li class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                  <span class="text-dim-outline">Maximum Echo Top:</span>
+                  <span class="text-on-surface">FL260 (26,000 ft)</span>
+                </li>
+                <li class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                  <span class="text-dim-outline">Storm Motion:</span>
+                  <span class="text-on-surface">ESE @ 22 kt</span>
+                </li>
+                <li class="d-flex justify-content-between py-1">
+                  <span class="text-dim-outline">Hail Probability:</span>
+                  <span class="text-warning">15% (Small Grains)</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="glass-panel p-3">
+              <div class="font-mono label-caps text-dim-outline">CALIBRATION &amp; STATUS</div>
+              <div class="d-flex align-items-center justify-content-between mt-2 font-mono text-body-sm">
+                <span class="text-muted-variant">Transmitter Status:</span>
+                <span class="text-success fw-semibold">Nominal 100%</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between mt-1 font-mono text-body-sm">
+                <span class="text-muted-variant">Calibration Error:</span>
+                <span class="text-cyan-dim">&plusmn; 0.12 dB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ====================================================================
+           VIEW 3: 10-DAY EXTENDED OUTLOOK
+           ==================================================================== -->
+      <section id="view-forecast" class="view-section d-none">
+        
+        <!-- Header Banner -->
+        <div class="glass-panel p-4 mb-4">
+          <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
+            <div>
+              <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                <span class="badge bg-secondary bg-opacity-25 text-primary-color font-mono label-caps">
+                  Ensemble Model Run • 04:00 UTC
+                </span>
+                <span class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                  <span class="material-symbols-outlined fs-6 text-amber">location_on</span>
+                  San Francisco, CA (37.7749° N, 122.4194° W)
+                </span>
+              </div>
+              <h1 class="font-headline headline-lg text-primary-color m-0">Extended 10-Day Outlook</h1>
+              <p class="text-muted-variant text-body-md mt-2 mb-0" style="max-width: 720px;">
+                Mild start to the cycle with maritime stratification. An incoming Pacific low-pressure trough drives scattered precipitation Thursday into Friday, rapidly evacuating prior to a stabilized, sun-drenched weekend ridge.
+              </p>
+            </div>
+
+            <div class="d-flex align-items-stretch gap-3">
+              <div class="glass-panel-subtle p-3 rounded-3" style="min-width: 140px;">
+                <div class="font-mono label-caps text-dim-outline">10-DAY RANGE</div>
+                <div class="font-headline headline-md text-amber mt-1">
+                  <span data-temp-f="74">74°</span> <span class="fs-6 text-dim-outline">/</span> <span class="text-cyan-dim" data-temp-f="51">51°</span>
+                </div>
+                <div class="font-mono label-caps text-muted-variant mt-1 text-success d-flex align-items-center gap-1">
+                  <span class="material-symbols-outlined fs-6">north_east</span> +2.8°F vs Normal
+                </div>
+              </div>
+
+              <div class="glass-panel-subtle p-3 rounded-3" style="min-width: 140px;">
+                <div class="font-mono label-caps text-dim-outline">TOTAL PRECIP ACCUM</div>
+                <div class="font-headline headline-md text-cryo mt-1">0.82 <span class="fs-6 text-dim-outline">in</span></div>
+                <div class="font-mono label-caps text-cryo mt-1 d-flex align-items-center gap-1">
+                  <span class="material-symbols-outlined fs-6">water_drop</span> 2 Rainy Days
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thermal Trajectory & Barometric Spline Chart -->
+        <div class="glass-panel p-4 mb-4">
+          <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-3">
+            <div>
+              <h3 class="font-headline headline-sm text-primary-color m-0">Thermal Trajectory &amp; Barometric Trend</h3>
+              <p class="text-body-sm text-muted-variant m-0">Continuous daytime maximum vs overnight cooling minimum profile across ensemble cycles</p>
+            </div>
+            <div class="d-flex align-items-center gap-3 font-mono label-caps text-dim-outline">
+              <span class="d-flex align-items-center gap-1 text-amber">
+                <span class="d-inline-block rounded-pill bg-warning" style="width:12px;height:6px;"></span> High Temp
+              </span>
+              <span class="d-flex align-items-center gap-1 text-cyan-dim">
+                <span class="d-inline-block rounded-pill bg-info" style="width:12px;height:6px;"></span> Low Temp
+              </span>
+            </div>
+          </div>
+
+          <div class="trajectory-chart-box">
+            <svg class="trajectory-svg" viewBox="0 0 900 180" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="highGrad10" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#ffb86b" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#ffb86b" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="lowGrad10" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#00dce6" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#00dce6" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Reference Grid Lines -->
+              <line x1="0" y1="40" x2="900" y2="40" stroke="#313440" stroke-width="1" stroke-dasharray="3 3"></line>
+              <line x1="0" y1="90" x2="900" y2="90" stroke="#313440" stroke-width="1" stroke-dasharray="3 3"></line>
+              <line x1="0" y1="140" x2="900" y2="140" stroke="#313440" stroke-width="1" stroke-dasharray="3 3"></line>
+
+              <!-- High Temp Area & Curve -->
+              <path d="M 45,70 C 135,50 225,55 315,85 C 405,115 495,120 585,80 C 675,40 765,45 855,35 L 855,180 L 45,180 Z" fill="url(#highGrad10)"></path>
+              <path d="M 45,70 C 135,50 225,55 315,85 C 405,115 495,120 585,80 C 675,40 765,45 855,35" fill="none" stroke="#ffb86b" stroke-width="3"></path>
+
+              <!-- Low Temp Area & Curve -->
+              <path d="M 45,130 C 135,125 225,128 315,145 C 405,155 495,152 585,135 C 675,120 765,118 855,110 L 855,180 L 45,180 Z" fill="url(#lowGrad10)"></path>
+              <path d="M 45,130 C 135,125 225,128 315,145 C 405,155 495,152 585,135 C 675,120 765,118 855,110" fill="none" stroke="#00dce6" stroke-width="2.5"></path>
+
+              <!-- Temperature Nodes -->
+              <g class="font-mono" fill="#e0e2f1">
+                <circle cx="45" cy="70" r="4.5" fill="#ffb86b"></circle><text x="45" y="58" font-size="12" text-anchor="middle">68°</text>
+                <circle cx="45" cy="130" r="4" fill="#00dce6"></circle><text x="45" y="150" font-size="11" fill="#b9cacb" text-anchor="middle">54°</text>
+
+                <circle cx="135" cy="55" r="4.5" fill="#ffb86b"></circle><text x="135" y="43" font-size="12" text-anchor="middle">71°</text>
+                <circle cx="135" cy="126" r="4" fill="#00dce6"></circle><text x="135" y="146" font-size="11" fill="#b9cacb" text-anchor="middle">55°</text>
+
+                <circle cx="225" cy="60" r="4.5" fill="#ffb86b"></circle><text x="225" y="48" font-size="12" text-anchor="middle">70°</text>
+                <circle cx="225" cy="130" r="4" fill="#00dce6"></circle><text x="225" y="150" font-size="11" fill="#b9cacb" text-anchor="middle">54°</text>
+
+                <circle cx="315" cy="92" r="4.5" fill="#ffb86b"></circle><text x="315" y="80" font-size="12" text-anchor="middle">62°</text>
+                <circle cx="315" cy="146" r="4" fill="#00dce6"></circle><text x="315" y="164" font-size="11" fill="#b9cacb" text-anchor="middle">52°</text>
+
+                <circle cx="405" cy="115" r="4.5" fill="#ffb86b"></circle><text x="405" y="103" font-size="12" text-anchor="middle">59°</text>
+                <circle cx="405" cy="155" r="4" fill="#00dce6"></circle><text x="405" y="172" font-size="11" fill="#b9cacb" text-anchor="middle">51°</text>
+
+                <circle cx="495" cy="100" r="4.5" fill="#ffb86b"></circle><text x="495" y="88" font-size="12" text-anchor="middle">64°</text>
+                <circle cx="495" cy="148" r="4" fill="#00dce6"></circle><text x="495" y="166" font-size="11" fill="#b9cacb" text-anchor="middle">52°</text>
+
+                <circle cx="585" cy="70" r="4.5" fill="#ffb86b"></circle><text x="585" y="58" font-size="12" text-anchor="middle">72°</text>
+                <circle cx="585" cy="132" r="4" fill="#00dce6"></circle><text x="585" y="152" font-size="11" fill="#b9cacb" text-anchor="middle">53°</text>
+
+                <circle cx="675" cy="48" r="4.5" fill="#ffb86b"></circle><text x="675" y="36" font-size="12" text-anchor="middle">74°</text>
+                <circle cx="675" cy="120" r="4" fill="#00dce6"></circle><text x="675" y="140" font-size="11" fill="#b9cacb" text-anchor="middle">55°</text>
+
+                <circle cx="765" cy="42" r="4.5" fill="#ffb86b"></circle><text x="765" y="30" font-size="12" text-anchor="middle">73°</text>
+                <circle cx="765" cy="118" r="4" fill="#00dce6"></circle><text x="765" y="138" font-size="11" fill="#b9cacb" text-anchor="middle">56°</text>
+
+                <circle cx="855" cy="35" r="4.5" fill="#ffb86b"></circle><text x="855" y="24" font-size="12" text-anchor="middle">75°</text>
+                <circle cx="855" cy="110" r="4" fill="#00dce6"></circle><text x="855" y="130" font-size="11" fill="#b9cacb" text-anchor="middle">57°</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 10-Day Daily Projections & Sidebar -->
+        <div class="row g-4">
+          
+          <!-- Daily Cards List (8 Cols) -->
+          <div class="col-12 col-lg-8">
+            <div class="glass-panel p-4">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                  <h3 class="font-headline headline-sm text-primary-color m-0">Granular Daily Projections</h3>
+                  <p class="text-body-sm text-muted-variant m-0">Click any day to unpack diurnal microclimates &amp; nocturnal boundary shifts</p>
+                </div>
+                <button type="button" class="btn btn-glass btn-sm" id="toggleAllDaysBtn">Expand All</button>
+              </div>
+
+              <div class="d-flex flex-column gap-2" id="forecastDaysList">
+                
+                <!-- Day 1: Today -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-amber">
+                        <span class="material-symbols-outlined fs-4">sunny</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface d-flex align-items-center gap-2">
+                          Today <span class="badge bg-info bg-opacity-25 text-cryo font-mono label-caps">LIVE</span>
+                        </div>
+                        <div class="text-dim-outline text-body-sm">Tue Oct 15 • Coastal Sun</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-dim-outline fs-6">water_drop</span> 5%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> WNW 14 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-amber font-mono label-caps">UV 6</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="54">54°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 20%; right: 25%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="68">68°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+
+                  <!-- Expandable Details Drawer -->
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Brisk marine layer dissolves by 10:30 AM. Peak solar irradiance at 13:15 with northwest gusts up to 21 mph along shoreline.</p>
+                        <div class="font-mono label-caps text-dim-outline mt-2">Humidity: 58% • Dew Point: 48°F • Pressure: 1016 hPa</div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Coastal stratus returns through the Golden Gate. Light onshore breeze slowing to 6 mph by midnight.</p>
+                        <div class="font-mono label-caps text-dim-outline mt-2">Humidity: 84% • Visibility: 7 mi • Precip Prob: 0%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day 2: Wed Oct 16 -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-amber">
+                        <span class="material-symbols-outlined fs-4">partly_cloudy_day</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface">Wed Oct 16</div>
+                        <div class="text-dim-outline text-body-sm">Mild Thermal Ridge</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-dim-outline fs-6">water_drop</span> 10%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> SW 11 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-amber font-mono label-caps">UV 5</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="55">55°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 24%; right: 18%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="71">71°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">High cirrus clouds feathering the skies. Warmer interior airmass spills into Mission District and East Bay.</p>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Barometer begins dropping late night ahead of northern maritime trough. Cloud deck progressively thickens.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day 3: Thu Oct 17 -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-cryo">
+                        <span class="material-symbols-outlined fs-4">rainy</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface">Thu Oct 17</div>
+                        <div class="text-dim-outline text-body-sm">Scattered Showers</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-cryo fw-bold">
+                        <span class="material-symbols-outlined text-cryo fs-6">water_drop</span> 65%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> SSW 19 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-dim-outline font-mono label-caps">UV 2</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="52">52°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 15%; right: 40%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="62">62°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Light intermittent rain intensifying around 2 PM. Wet pavement advisories. Estimated 0.35 in accumulation.</p>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Passing rain bands transitioning into coastal mist and fog pockets late overnight.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day 4: Fri Oct 18 -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-cryo">
+                        <span class="material-symbols-outlined fs-4">weather_mix</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface">Fri Oct 18</div>
+                        <div class="text-dim-outline text-body-sm">AM Drizzle to Clearing</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-cryo">
+                        <span class="material-symbols-outlined text-cryo fs-6">water_drop</span> 45%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> NW 16 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-amber font-mono label-caps">UV 4</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="51">51°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 12%; right: 48%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="59">59°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Early morning drizzle gives way to fractured stratocumulus and brisk offshore winds.</p>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Sky scrubs crystal clear. Radiational cooling drops temperatures to 51°F.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day 5: Sat Oct 19 (Weekend) -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-amber">
+                        <span class="material-symbols-outlined fs-4">sunny</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface">Sat Oct 19</div>
+                        <div class="text-dim-outline text-body-sm">Sunny &amp; Crisply Clear</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-dim-outline fs-6">water_drop</span> 0%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> NNE 8 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-amber font-mono label-caps">UV 6</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="52">52°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 15%; right: 23%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="72">72°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Pristine outdoor conditions with offshore warming the Bay. Outstanding visibility.</p>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Star-filled nocturnal sky, light breeze.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day 6: Sun Oct 20 -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-amber">
+                        <span class="material-symbols-outlined fs-4">sunny</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface">Sun Oct 20</div>
+                        <div class="text-dim-outline text-body-sm">Warm Autumn Peak</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-dim-outline fs-6">water_drop</span> 0%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> W 9 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-amber font-mono label-caps">UV 6</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="55">55°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 20%; right: 12%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="74">74°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Optimal conditions for outdoor activities, parks, and dining.</p>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Mild evening temperatures.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day 7: Mon Oct 21 -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-amber">
+                        <span class="material-symbols-outlined fs-4">partly_cloudy_day</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface">Mon Oct 21</div>
+                        <div class="text-dim-outline text-body-sm">Scattered High Cirrus</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-dim-outline fs-6">water_drop</span> 5%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> NW 12 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-amber font-mono label-caps">UV 5</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="56">56°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 22%; right: 15%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="73">73°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Mild weather with pleasant afternoon warmth.</p>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Quiet night with gradual marine layer return.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day 8: Tue Oct 22 -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-amber">
+                        <span class="material-symbols-outlined fs-4">sunny</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface">Tue Oct 22</div>
+                        <div class="text-dim-outline text-body-sm">Pure Sun</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-dim-outline fs-6">water_drop</span> 0%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> NW 10 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-amber font-mono label-caps">UV 5</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="57">57°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 24%; right: 8%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="75">75°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Continued offshore heating. Peak maximum reaches 75°F downtown.</p>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Mild, calm evening with near-zero wind.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day 9: Wed Oct 23 -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-dim-outline">
+                        <span class="material-symbols-outlined fs-4">foggy</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface">Wed Oct 23</div>
+                        <div class="text-dim-outline text-body-sm">Morning Stratus / Fog</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-dim-outline fs-6">water_drop</span> 10%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> W 14 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-amber font-mono label-caps">UV 4</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="54">54°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 20%; right: 22%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="69">69°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Dense fog bank rolls through Golden Gate at dawn, burning off toward the coast by mid-day.</p>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Deep marine layer inversion reforms rapidly over the peninsula.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day 10: Thu Oct 24 -->
+                <div class="day-forecast-row">
+                  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3" style="min-width: 180px;">
+                      <div class="station-icon-avatar text-amber">
+                        <span class="material-symbols-outlined fs-4">partly_cloudy_day</span>
+                      </div>
+                      <div>
+                        <div class="font-headline fw-semibold text-on-surface">Thu Oct 24</div>
+                        <div class="text-dim-outline text-body-sm">Scattered Clouds</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4">
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-dim-outline fs-6">water_drop</span> 15%
+                      </div>
+                      <div class="d-flex align-items-center gap-1 font-mono text-body-sm text-muted-variant">
+                        <span class="material-symbols-outlined text-cryo fs-6">air</span> WNW 15 mph
+                      </div>
+                      <span class="badge bg-secondary bg-opacity-25 text-amber font-mono label-caps">UV 4</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                      <span class="font-mono label-data-md text-cyan-dim" data-temp-f="53">53°</span>
+                      <div class="thermal-range-bar-track">
+                        <div class="thermal-range-fill" style="left: 18%; right: 28%;"></div>
+                      </div>
+                      <span class="font-mono label-data-md text-amber" data-temp-f="67">67°</span>
+                      <span class="material-symbols-outlined text-dim-outline accordion-chevron" style="transition: transform 0.2s;">expand_more</span>
+                    </div>
+                  </div>
+                  <div class="accordion-drawer d-none">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-amber d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">light_mode</span> Day Profile
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Alternating sunshine and low clouds. Typical autumn microclimatic variation.</p>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="font-mono label-caps text-cyan-dim d-flex align-items-center gap-1 mb-1">
+                          <span class="material-symbols-outlined fs-6">bedtime</span> Night Outlook
+                        </div>
+                        <p class="text-body-sm text-muted-variant m-0">Cool and overcast. Ensemble tracks a secondary cold-front approach.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar: Weekend Spotlight & Climate Baseline (4 Cols) -->
+          <div class="col-12 col-lg-4 d-flex flex-column gap-4">
+            
+            <!-- Weekend Spotlight -->
+            <div class="glass-panel p-4 position-relative">
+              <div class="flare-glow-amber" style="bottom: -40px; right: -40px;"></div>
+              <div class="d-flex align-items-center justify-content-between mb-3 z-1">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="material-symbols-outlined text-amber fs-5">hotel_class</span>
+                  <h3 class="font-headline headline-sm text-primary-color m-0">Weekend Spotlight</h3>
+                </div>
+                <span class="badge bg-warning bg-opacity-25 text-amber font-mono label-caps">PRIME WINDOW</span>
+              </div>
+              <p class="text-body-sm text-muted-variant mb-3 z-1">
+                The passing front completely clears by dawn Saturday, yielding an optimal microclimate window across the Bay Area for open-air pursuits.
+              </p>
+
+              <!-- Saturday -->
+              <div class="glass-panel-subtle p-3 mb-3 z-1">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div class="font-headline fw-semibold text-primary-color">Saturday, Oct 19</div>
+                    <div class="text-body-sm text-dim-outline">72° / 52° • 0% Rain • 8 mph NNE</div>
+                  </div>
+                  <div class="text-end">
+                    <div class="font-mono label-data-lg text-cryo">96/100</div>
+                    <div class="font-mono label-caps text-dim-outline">SUITABILITY</div>
+                  </div>
+                </div>
+                <div class="precip-bar-track my-2">
+                  <div class="precip-bar-fill" style="width: 96%;"></div>
+                </div>
+                <div class="d-flex gap-1 flex-wrap font-mono label-caps text-muted-variant">
+                  <span class="badge bg-dark">Hiking: Ideal</span>
+                  <span class="badge bg-dark">Cycling: Excellent</span>
+                  <span class="badge bg-dark">Sailing: Moderate</span>
+                </div>
+              </div>
+
+              <!-- Sunday -->
+              <div class="glass-panel-subtle p-3 z-1">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div class="font-headline fw-semibold text-primary-color">Sunday, Oct 20</div>
+                    <div class="text-body-sm text-dim-outline">74° / 55° • 0% Rain • 9 mph W</div>
+                  </div>
+                  <div class="text-end">
+                    <div class="font-mono label-data-lg text-amber">94/100</div>
+                    <div class="font-mono label-caps text-dim-outline">SUITABILITY</div>
+                  </div>
+                </div>
+                <div class="precip-bar-track my-2">
+                  <div class="precip-bar-fill bg-warning" style="width: 94%;"></div>
+                </div>
+                <div class="d-flex gap-1 flex-wrap font-mono label-caps text-muted-variant">
+                  <span class="badge bg-dark">Beach/Park: Peak</span>
+                  <span class="badge bg-dark">Running: 8AM-11AM</span>
+                  <span class="badge bg-dark">Dining: Clear Sky</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Historical Baseline Card -->
+            <div class="glass-panel p-4 flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined text-cyan-dim fs-5">history</span>
+                    <h3 class="font-headline headline-sm text-primary-color m-0">Historical Baseline</h3>
+                  </div>
+                  <span class="font-mono label-caps text-dim-outline">NOAA 1991–2020</span>
+                </div>
+                <p class="text-body-sm text-muted-variant mb-3">
+                  San Francisco autumn normal baseline vs present 10-day numerical simulation ensemble.
+                </p>
+
+                <div class="glass-panel-subtle p-3 mb-3">
+                  <div class="d-flex justify-content-between py-1">
+                    <span class="text-muted-variant">Mean Forecast High:</span>
+                    <span class="font-mono label-data-lg text-amber">69.0°F</span>
+                  </div>
+                  <div class="d-flex justify-content-between py-1">
+                    <span class="text-muted-variant">30-Yr Average High:</span>
+                    <span class="font-mono label-data-md text-dim-outline">65.8°F</span>
+                  </div>
+                  <div class="d-flex justify-content-between pt-2 border-top border-secondary border-opacity-10">
+                    <span class="text-primary-color fw-medium">Thermal Anomaly:</span>
+                    <span class="font-mono text-amber fw-semibold d-flex align-items-center gap-1">
+                      <span class="material-symbols-outlined fs-6">arrow_upward</span> +3.2°F Above Normal
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center gap-2 p-2 rounded glass-panel-subtle font-mono label-caps text-dim-outline">
+                <span class="material-symbols-outlined fs-6 text-cryo">verified</span>
+                Verified by Aether Numerical Engine v4.8
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ====================================================================
+           VIEW 4: AIR QUALITY & HEALTH
+           ==================================================================== -->
+      <section id="view-air-quality" class="view-section d-none">
+        
+        <!-- Header Strip -->
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+          <div class="d-flex align-items-center gap-3">
+            <div class="station-icon-avatar text-cryo" style="width:52px;height:52px;">
+              <span class="material-symbols-outlined fs-2 filled">air</span>
+            </div>
+            <div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="font-mono label-caps text-cryo">ATMOSPHERIC BIO-SENSOR GRID</span>
+                <span class="pulse-beacon cyan"></span>
+                <span class="font-mono label-caps text-dim-outline">NODE 09-ALPHA</span>
+              </div>
+              <h1 class="font-headline headline-lg text-primary-color m-0">Environmental Health &amp; Bio-Telemetry</h1>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="location-badge">
+              <span class="material-symbols-outlined text-cryo fs-6">location_on</span>
+              <span class="font-mono text-body-sm text-on-surface">SF Bay Biosphere (37.7749° N, 122.4194° W)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+          
+          <!-- Real-Time Air Quality Hero Index (5 Cols) -->
+          <div class="col-12 col-xl-5">
+            <div class="glass-panel p-4 h-100 d-flex flex-column justify-content-between position-relative">
+              <div class="flare-glow-cyan" style="top: -80px; left: -80px;"></div>
+              <div class="flare-glow-violet" style="bottom: -80px; right: -80px;"></div>
+
+              <div>
+                <div class="d-flex align-items-center justify-content-between mb-3 z-1">
+                  <span class="font-mono label-caps text-dim-outline">COMPOSITE INDEX // LIVE FEED</span>
+                  <span class="badge bg-secondary bg-opacity-25 text-cryo font-mono label-caps">
+                    EPA STANDARD AQI
+                  </span>
+                </div>
+
+                <!-- Hero Circular Arc Gauge -->
+                <div class="d-flex flex-column align-items-center justify-content-center my-4 z-1">
+                  <div class="aqi-circular-gauge">
+                    <svg class="aqi-circular-svg" viewBox="0 0 200 200">
+                      <!-- Base Gauge Ring -->
+                      <circle cx="100" cy="100" r="82" fill="none" stroke="#262a35" stroke-width="12" stroke-dasharray="515" stroke-dashoffset="103" stroke-linecap="round"></circle>
+                      <!-- Active Value Arc (32 / 300) -->
+                      <circle cx="100" cy="100" r="82" fill="none" stroke="#00f2fe" stroke-width="12" stroke-dasharray="515" stroke-dashoffset="445" stroke-linecap="round" style="filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.45));"></circle>
+                    </svg>
+
+                    <!-- Central Metric Readout -->
+                    <div class="position-absolute text-center">
+                      <div class="font-mono label-caps text-dim-outline">AIR QUALITY INDEX</div>
+                      <div class="display-hero text-primary-color fw-light mt-1">32</div>
+                      <div class="badge rounded-pill bg-info bg-opacity-20 text-cyan-dim px-3 py-1 mt-1 d-inline-flex align-items-center gap-1">
+                        <span class="material-symbols-outlined fs-6">verified</span>
+                        <span>Good / Clean Air</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- AQI Spectrum Bar -->
+                  <div class="w-100 mt-3" style="max-width: 300px;">
+                    <div class="d-flex rounded-pill overflow-hidden" style="height: 6px;">
+                      <div class="bg-info" style="width: 17%;"></div>
+                      <div class="bg-warning opacity-50" style="width: 17%;"></div>
+                      <div class="bg-warning" style="width: 17%;"></div>
+                      <div class="bg-danger opacity-50" style="width: 17%;"></div>
+                      <div class="bg-danger" style="width: 17%;"></div>
+                      <div class="bg-dark" style="width: 15%;"></div>
+                    </div>
+                    <div class="d-flex justify-content-between font-mono label-caps text-dim-outline mt-1">
+                      <span>0 GOOD</span>
+                      <span>50 MOD</span>
+                      <span>100+ UNHEALTHY</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dominant Factor Box -->
+                <div class="glass-panel-subtle p-3 d-flex align-items-center justify-content-between mb-3 z-1">
+                  <div class="d-flex align-items-center gap-3">
+                    <span class="material-symbols-outlined text-amber fs-4">blur_on</span>
+                    <div>
+                      <div class="font-mono label-caps text-dim-outline">DOMINANT FACTOR</div>
+                      <div class="font-headline fs-6 fw-semibold text-primary-color">PM2.5 (Fine Particles)</div>
+                    </div>
+                  </div>
+                  <div class="text-end">
+                    <div class="font-mono label-data-lg text-primary-color">7.8 <span class="fs-6 fw-normal text-muted-variant">µg/m³</span></div>
+                    <div class="font-mono label-caps text-cyan-dim">Within WHO Limits</div>
+                  </div>
+                </div>
+
+                <!-- Health Guidance Alert -->
+                <div class="glass-panel-subtle p-3 d-flex gap-3 z-1">
+                  <span class="material-symbols-outlined text-cryo fs-4 filled mt-1">health_and_safety</span>
+                  <div>
+                    <h5 class="font-headline fs-6 text-on-surface mb-1">Health Advisory Guidance</h5>
+                    <p class="text-body-sm text-muted-variant m-0">Air quality is completely satisfactory, and air pollution poses little or no risk. Ideal conditions for outdoor endurance training and cycling.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Pollutant Breakdown Matrix (7 Cols) -->
+          <div class="col-12 col-xl-7 d-flex flex-column gap-4">
+            
+            <div class="glass-panel p-4">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                  <div class="font-mono label-caps text-dim-outline">ATMOSPHERIC COMPOSITION</div>
+                  <h3 class="font-headline headline-sm text-primary-color m-0">Pollutant Breakdown Matrix</h3>
+                </div>
+                <div class="d-none d-sm-flex align-items-center gap-3 font-mono label-caps text-dim-outline">
+                  <span class="d-flex align-items-center gap-1"><span class="pulse-beacon cyan" style="width:6px;height:6px;"></span> Optimal</span>
+                  <span class="d-flex align-items-center gap-1"><span class="pulse-beacon amber" style="width:6px;height:6px;"></span> Alert Threshold</span>
+                </div>
+              </div>
+
+              <!-- 6 Pollutant Matrix Cards -->
+              <div class="row g-3">
+                
+                <!-- PM 2.5 -->
+                <div class="col-12 col-md-4">
+                  <div class="pollutant-card">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <div class="font-mono fw-bold text-primary-color">PM 2.5</div>
+                        <div class="text-body-sm text-dim-outline">Fine Particulates</div>
+                      </div>
+                      <span class="badge bg-info bg-opacity-25 text-cyan-dim font-mono label-caps">GOOD</span>
+                    </div>
+                    <div>
+                      <div class="d-flex justify-content-between align-items-baseline mb-1">
+                        <span class="font-mono label-data-lg text-on-surface">7.8</span>
+                        <span class="font-mono label-caps text-dim-outline">Limit: 15 µg/m³</span>
+                      </div>
+                      <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 52%;"></div></div>
+                    </div>
+                    <div class="text-body-sm text-muted-variant text-truncate">Airway penetrating particles</div>
+                  </div>
+                </div>
+
+                <!-- PM 10 -->
+                <div class="col-12 col-md-4">
+                  <div class="pollutant-card">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <div class="font-mono fw-bold text-primary-color">PM 10</div>
+                        <div class="text-body-sm text-dim-outline">Coarse Dust</div>
+                      </div>
+                      <span class="badge bg-info bg-opacity-25 text-cyan-dim font-mono label-caps">GOOD</span>
+                    </div>
+                    <div>
+                      <div class="d-flex justify-content-between align-items-baseline mb-1">
+                        <span class="font-mono label-data-lg text-on-surface">14.2</span>
+                        <span class="font-mono label-caps text-dim-outline">Limit: 45 µg/m³</span>
+                      </div>
+                      <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 31%;"></div></div>
+                    </div>
+                    <div class="text-body-sm text-muted-variant text-truncate">Surface aerosol &amp; dust</div>
+                  </div>
+                </div>
+
+                <!-- O3 -->
+                <div class="col-12 col-md-4">
+                  <div class="pollutant-card">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <div class="font-mono fw-bold text-primary-color">O₃</div>
+                        <div class="text-body-sm text-dim-outline">Ground Ozone</div>
+                      </div>
+                      <span class="badge bg-info bg-opacity-25 text-cyan-dim font-mono label-caps">LOW</span>
+                    </div>
+                    <div>
+                      <div class="d-flex justify-content-between align-items-baseline mb-1">
+                        <span class="font-mono label-data-lg text-on-surface">24 <span class="fs-6 fw-normal text-dim-outline">ppb</span></span>
+                        <span class="font-mono label-caps text-dim-outline">Limit: 50 ppb</span>
+                      </div>
+                      <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 48%;"></div></div>
+                    </div>
+                    <div class="text-body-sm text-muted-variant text-truncate">Photochemical sunlight by-product</div>
+                  </div>
+                </div>
+
+                <!-- NO2 -->
+                <div class="col-12 col-md-4">
+                  <div class="pollutant-card">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <div class="font-mono fw-bold text-primary-color">NO₂</div>
+                        <div class="text-body-sm text-dim-outline">Nitrogen Dioxide</div>
+                      </div>
+                      <span class="badge bg-info bg-opacity-25 text-cyan-dim font-mono label-caps">GOOD</span>
+                    </div>
+                    <div>
+                      <div class="d-flex justify-content-between align-items-baseline mb-1">
+                        <span class="font-mono label-data-lg text-on-surface">11 <span class="fs-6 fw-normal text-dim-outline">ppb</span></span>
+                        <span class="font-mono label-caps text-dim-outline">Limit: 40 ppb</span>
+                      </div>
+                      <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 27%;"></div></div>
+                    </div>
+                    <div class="text-body-sm text-muted-variant text-truncate">Vehicular exhaust gas</div>
+                  </div>
+                </div>
+
+                <!-- SO2 -->
+                <div class="col-12 col-md-4">
+                  <div class="pollutant-card">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <div class="font-mono fw-bold text-primary-color">SO₂</div>
+                        <div class="text-body-sm text-dim-outline">Sulfur Dioxide</div>
+                      </div>
+                      <span class="badge bg-info bg-opacity-25 text-cyan-dim font-mono label-caps">VERY LOW</span>
+                    </div>
+                    <div>
+                      <div class="d-flex justify-content-between align-items-baseline mb-1">
+                        <span class="font-mono label-data-lg text-on-surface">2.1 <span class="fs-6 fw-normal text-dim-outline">ppb</span></span>
+                        <span class="font-mono label-caps text-dim-outline">Limit: 20 ppb</span>
+                      </div>
+                      <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 10%;"></div></div>
+                    </div>
+                    <div class="text-body-sm text-muted-variant text-truncate">Maritime fuel combustion</div>
+                  </div>
+                </div>
+
+                <!-- CO -->
+                <div class="col-12 col-md-4">
+                  <div class="pollutant-card">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <div class="font-mono fw-bold text-primary-color">CO</div>
+                        <div class="text-body-sm text-dim-outline">Carbon Monoxide</div>
+                      </div>
+                      <span class="badge bg-info bg-opacity-25 text-cyan-dim font-mono label-caps">VERY LOW</span>
+                    </div>
+                    <div>
+                      <div class="d-flex justify-content-between align-items-baseline mb-1">
+                        <span class="font-mono label-data-lg text-on-surface">0.4 <span class="fs-6 fw-normal text-dim-outline">ppm</span></span>
+                        <span class="font-mono label-caps text-dim-outline">Limit: 4.0 ppm</span>
+                      </div>
+                      <div class="precip-bar-track"><div class="precip-bar-fill" style="width: 10%;"></div></div>
+                    </div>
+                    <div class="text-body-sm text-muted-variant text-truncate">Incomplete thermal combustion</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Activity Indices Strip -->
+            <div class="row g-3">
+              <div class="col-12 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3">
+                  <div class="station-icon-avatar text-cryo">
+                    <span class="material-symbols-outlined fs-3">directions_run</span>
+                  </div>
+                  <div>
+                    <div class="font-mono label-caps text-dim-outline">ATHLETICS INDEX</div>
+                    <div class="font-headline headline-sm fw-bold text-primary-color">9.5 <span class="fs-6 fw-normal text-dim-outline">/ 10</span></div>
+                    <div class="text-cyan-dim text-body-sm">Prime outdoor running</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3">
+                  <div class="station-icon-avatar text-cyan-dim">
+                    <span class="material-symbols-outlined fs-3">pulmonology</span>
+                  </div>
+                  <div>
+                    <div class="font-mono label-caps text-dim-outline">PULMONARY RISK</div>
+                    <div class="font-headline headline-sm fw-bold text-primary-color">Minimal</div>
+                    <div class="text-dim-outline text-body-sm">Safe for sensitive groups</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3">
+                  <div class="station-icon-avatar text-amber">
+                    <span class="material-symbols-outlined fs-3">pets</span>
+                  </div>
+                  <div>
+                    <div class="font-mono label-caps text-dim-outline">PET RECREATION</div>
+                    <div class="font-headline headline-sm fw-bold text-primary-color">Optimal</div>
+                    <div class="text-dim-outline text-body-sm">Zero ground irritants</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Allergy & Pollen Outlook -->
+        <div class="glass-panel p-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div>
+              <div class="font-mono label-caps text-dim-outline">BIO-AEROSOLS</div>
+              <h3 class="font-headline headline-sm text-primary-color m-0">Allergy &amp; Pollen Outlook</h3>
+            </div>
+            <span class="material-symbols-outlined text-dim-outline fs-5">psychiatry</span>
+          </div>
+
+          <div class="row g-3">
+            <!-- Tree Pollen -->
+            <div class="col-12 col-md-3">
+              <div class="glass-panel-subtle p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined text-amber fs-5">park</span>
+                    <span class="fw-medium text-on-surface">Tree Pollen</span>
+                  </div>
+                  <span class="badge bg-warning bg-opacity-25 text-amber font-mono label-caps">MODERATE</span>
+                </div>
+                <div class="row g-1 text-center font-mono label-caps text-dim-outline">
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-warning rounded-bottom" style="height:60%;"></div>
+                    </div>
+                    <span>Today</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-warning rounded-bottom" style="height:75%;"></div>
+                    </div>
+                    <span>Wed</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-warning rounded-bottom" style="height:50%;"></div>
+                    </div>
+                    <span>Thu</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-info rounded-bottom" style="height:20%;"></div>
+                    </div>
+                    <span>Fri</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grass Pollen -->
+            <div class="col-12 col-md-3">
+              <div class="glass-panel-subtle p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined text-cyan-dim fs-5">grass</span>
+                    <span class="fw-medium text-on-surface">Grass Pollen</span>
+                  </div>
+                  <span class="badge bg-info bg-opacity-25 text-cyan-dim font-mono label-caps">LOW</span>
+                </div>
+                <div class="row g-1 text-center font-mono label-caps text-dim-outline">
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-info rounded-bottom" style="height:25%;"></div>
+                    </div>
+                    <span>Today</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-info rounded-bottom" style="height:30%;"></div>
+                    </div>
+                    <span>Wed</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-info rounded-bottom" style="height:15%;"></div>
+                    </div>
+                    <span>Thu</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-info rounded-bottom" style="height:20%;"></div>
+                    </div>
+                    <span>Fri</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ragweed -->
+            <div class="col-12 col-md-3">
+              <div class="glass-panel-subtle p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined text-dim-outline fs-5">spa</span>
+                    <span class="fw-medium text-on-surface">Ragweed</span>
+                  </div>
+                  <span class="badge bg-secondary bg-opacity-25 text-dim-outline font-mono label-caps">NONE</span>
+                </div>
+                <div class="row g-1 text-center font-mono label-caps text-dim-outline">
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-secondary opacity-25 rounded-bottom" style="height:5%;"></div>
+                    </div>
+                    <span>Today</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-secondary opacity-25 rounded-bottom" style="height:5%;"></div>
+                    </div>
+                    <span>Wed</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-secondary opacity-25 rounded-bottom" style="height:5%;"></div>
+                    </div>
+                    <span>Thu</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-secondary opacity-25 rounded-bottom" style="height:5%;"></div>
+                    </div>
+                    <span>Fri</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mold Spores -->
+            <div class="col-12 col-md-3">
+              <div class="glass-panel-subtle p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined text-violet fs-5">grain</span>
+                    <span class="fw-medium text-on-surface">Mold Spores</span>
+                  </div>
+                  <span class="badge bg-info bg-opacity-25 text-cyan-dim font-mono label-caps">LOW</span>
+                </div>
+                <div class="row g-1 text-center font-mono label-caps text-dim-outline">
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-info rounded-bottom" style="height:20%;"></div>
+                    </div>
+                    <span>Today</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-info rounded-bottom" style="height:15%;"></div>
+                    </div>
+                    <span>Wed</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-info rounded-bottom" style="height:10%;"></div>
+                    </div>
+                    <span>Thu</span>
+                  </div>
+                  <div class="col-3">
+                    <div class="precip-bar-track my-1" style="height:28px; display:flex; align-items:flex-end;">
+                      <div class="w-100 bg-info rounded-bottom" style="height:15%;"></div>
+                    </div>
+                    <span>Fri</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ====================================================================
+           VIEW 5: SEVERE ALERTS & ADVISORIES
+           ==================================================================== -->
+      <section id="view-alerts" class="view-section d-none">
+        
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="pulse-beacon amber"></span>
+              <span class="font-mono label-caps text-amber">ACTIVE METEOROLOGICAL WARNINGS</span>
+            </div>
+            <h1 class="font-headline headline-lg text-primary-color m-0">Atmospheric Hazards &amp; Advisories</h1>
+          </div>
+          <span class="badge bg-warning bg-opacity-25 text-warning font-mono fs-6 px-3 py-2 border border-warning">
+            1 Active Bulletin
+          </span>
+        </div>
+
+        <!-- Gale Warning Bulletin -->
+        <div class="glass-panel p-4 mb-4 border-warning border-opacity-50 position-relative">
+          <div class="flare-glow-amber" style="top: -60px; right: -60px;"></div>
+
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-3 z-1">
+            <div class="d-flex align-items-center gap-3">
+              <div class="station-icon-avatar text-amber bg-warning bg-opacity-15">
+                <span class="material-symbols-outlined fs-2">warning</span>
+              </div>
+              <div>
+                <span class="badge bg-warning text-dark font-mono label-caps mb-1">COASTAL MARINE ALERT</span>
+                <h2 class="font-headline headline-sm text-on-surface m-0">Gale Advisory: Offshore Maritime Vector</h2>
+                <div class="font-mono label-caps text-dim-outline mt-1">NOAA NWS BULLETIN #SF-GL-8821 • EXPIRES 23:00 PDT</div>
+              </div>
+            </div>
+            <div class="text-md-end">
+              <span class="badge bg-danger bg-opacity-25 text-danger font-mono label-caps">HAZARDOUS SEAS</span>
+              <div class="font-mono label-data-md text-amber mt-1">NW Winds 25–35 kt (Gusts 45 kt)</div>
+            </div>
+          </div>
+
+          <div class="glass-panel-subtle p-3 mb-3 z-1">
+            <h5 class="font-headline fs-6 text-primary-color mb-2">Affected Geographic Scope</h5>
+            <p class="text-body-sm text-muted-variant mb-2">
+              Coastal waters from Point Reyes to Pigeon Point, CA out to 10 nm, including the San Francisco Bar entrance and Farallon Islands marine corridor.
+            </p>
+            <div class="row g-2 font-mono label-caps text-dim-outline">
+              <div class="col-12 col-md-4">Seas: <strong>10 to 14 feet at 11 seconds</strong></div>
+              <div class="col-12 col-md-4">Dominant Period: <strong>Steep Wind Wave</strong></div>
+              <div class="col-12 col-md-4">Bar Crossing: <strong>Extremely Rough &amp; Hazardous</strong></div>
+            </div>
+          </div>
+
+          <div class="glass-panel-subtle p-3 mb-3 z-1">
+            <h5 class="font-headline fs-6 text-primary-color mb-2">Precautionary / Preparedness Actions</h5>
+            <p class="text-body-sm text-muted-variant m-0">
+              Inexperienced mariners, especially those operating smaller vessels, should avoid navigating in these conditions. Secure vessel dockage and verify auxiliary propulsion and VHF Channel 16 readiness.
+            </p>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between z-1 pt-2">
+            <span class="font-mono label-caps text-dim-outline">SOURCE: NATIONAL WEATHER SERVICE MONTEREY CA</span>
+            <button class="btn btn-cryo btn-sm" onclick="alert('Notification alert subscribed for active station.')">
+              <span class="material-symbols-outlined fs-6">notifications_active</span> Subscribe to SMS Alerts
+            </button>
+          </div>
+        </div>
+
+        <!-- Archived Past Advisories -->
+        <div class="glass-panel p-4">
+          <h4 class="font-headline headline-sm text-on-surface mb-3">Recently Cleared Advisories</h4>
+          <div class="d-flex flex-column gap-2 font-mono text-body-sm">
+            <div class="glass-panel-subtle p-3 d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined text-success fs-5">check_circle</span>
+                <span class="text-on-surface">Dense Fog Advisory (Golden Gate Marine Channel)</span>
+              </div>
+              <span class="text-dim-outline label-caps">CLEARED 10:15 AM PDT</span>
+            </div>
+            <div class="glass-panel-subtle p-3 d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined text-success fs-5">check_circle</span>
+                <span class="text-on-surface">Beach Hazards Statement (King Tides &amp; Sneaker Waves)</span>
+              </div>
+              <span class="text-dim-outline label-caps">CLEARED YESTERDAY 18:00 PDT</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       Global Footer
+       ========================================================================== -->
+  <footer class="aether-footer">
+    <div class="container-xxl">
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 text-center text-md-start">
+        <div class="d-flex align-items-center gap-2">
+          <span class="font-headline headline-sm text-primary-color fw-semibold">Aether Weather</span>
+          <span class="text-dim-outline text-body-sm">| Precision Atmospheric Telemetry &amp; Global Spatial Radar</span>
+        </div>
+        <div class="d-flex align-items-center gap-3 flex-wrap justify-content-center">
+          <a href="#radar" data-nav-view="radar" class="footer-link">Doppler Station Network</a>
+          <a href="#forecast" data-nav-view="forecast" class="footer-link">10-Day Projections</a>
+          <a href="#air-quality" data-nav-view="air-quality" class="footer-link">Bio-Sensor API</a>
+          <a href="#alerts" data-nav-view="alerts" class="footer-link">Severe Advisories</a>
+        </div>
+        <div class="font-mono label-caps text-dim-outline">
+          &copy; 2026 Aether Telemetry Labs. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       Command Palette & City Search Modal (Ctrl+K)
+       ========================================================================== -->
+  <div class="modal fade aether-modal" id="searchPaletteModal" tabindex="-1" aria-labelledby="searchPaletteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header p-3">
+          <div class="d-flex align-items-center gap-2 w-100">
+            <span class="material-symbols-outlined text-cryo fs-4">search</span>
+            <input type="text" class="form-control bg-transparent border-0 text-light shadow-none fs-5" id="commandPaletteInput" placeholder="Type a city name, station ID, or country..." autofocus>
+            <kbd class="kbd-shortcut">ESC</kbd>
+          </div>
+        </div>
+        <div class="modal-body p-3">
+          <div class="font-mono label-caps text-dim-outline mb-2 px-2">TELEMETRY STATIONS &amp; PRESETS</div>
+          <div class="d-flex flex-column gap-1" id="paletteCityResults">
+            <!-- Dynamic city entries rendered by script.js -->
+          </div>
+        </div>
+        <div class="modal-footer p-2 justify-content-between font-mono label-caps text-dim-outline">
+          <span>Tip: Use ↑ ↓ to navigate, Enter to select</span>
+          <span>Aether Hub v3.4</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <!-- Application Controller -->
+  <script src="script.js"></script>
+
+</body>
+</html>

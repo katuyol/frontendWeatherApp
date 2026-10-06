@@ -1,0 +1,1203 @@
+/* ==========================================================================
+   AETHER WEATHER HUB - DESIGN SYSTEM & STYLESHEET
+   Aetherium Glass Theme - Atmospheric Precision Telemetry
+   Bootstrap 5 Enhanced | Pure Vanilla CSS (No Tailwind)
+   ========================================================================== */
+
+:root {
+  /* Surface & Ground Plane Palette */
+  --bg-surface: #10131d;
+  --bg-surface-dim: #10131d;
+  --bg-surface-bright: #363944;
+  --surface-container-lowest: #0a0e18;
+  --surface-container-low: #181b26;
+  --surface-container: #1c1f2a;
+  --surface-container-high: #262a35;
+  --surface-container-highest: #313440;
+  
+  /* Text & Contrast Hues */
+  --text-on-surface: #e0e2f1;
+  --text-on-surface-variant: #b9cacb;
+  --text-outline: #849495;
+  --text-outline-variant: #3a494b;
+
+  /* Primary Neon Spectrum (Cryo Cyan) */
+  --primary: #e0fdff;
+  --primary-container: #00f2fe;
+  --on-primary: #00373a;
+  --on-primary-container: #006a70;
+  --primary-fixed: #6ff6ff;
+  --primary-fixed-dim: #00dce6;
+
+  /* Secondary Spectrum (Solar Amber) */
+  --secondary: #ffb86b;
+  --secondary-container: #ed9000;
+  --on-secondary: #492900;
+  --on-secondary-container: #583300;
+  --secondary-fixed: #ffdcbc;
+  --secondary-fixed-dim: #ffb86b;
+
+  /* Tertiary Spectrum (Ionized Violet) */
+  --tertiary: #fcf5ff;
+  --tertiary-container: #e3d4ff;
+  --on-tertiary-container: #7318ff;
+  --tertiary-fixed: #e9ddff;
+  --tertiary-fixed-dim: #d1bcff;
+
+  /* Error & Hazard Spectrum */
+  --error: #ffb4ab;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+
+  /* Glassmorphism Specs */
+  --glass-card-bg: rgba(24, 27, 38, 0.78);
+  --glass-card-subtle: rgba(28, 31, 42, 0.65);
+  --glass-card-border: rgba(255, 255, 255, 0.1);
+  --glass-card-border-top: rgba(255, 255, 255, 0.18);
+  --glass-card-border-bottom: rgba(0, 242, 254, 0.05);
+  --glass-blur: blur(24px) saturate(180%);
+  --glass-shadow: 0 16px 32px -8px rgba(0, 4, 12, 0.65);
+  --glass-glow-cyan: 0 0 24px rgba(0, 242, 254, 0.35);
+  --glass-glow-amber: 0 0 24px rgba(237, 144, 0, 0.3);
+
+  /* Typography Stacks */
+  --font-headline: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Spacing Scale */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-pill: 9999px;
+}
+
+/* ==========================================================================
+   Base & Resets
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-surface);
+  color: var(--text-on-surface);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+::selection {
+  background-color: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+/* Hide scrollbars for clean HUD aesthetic while keeping scrolling functional */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-container-lowest);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-container-high);
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-outline);
+}
+
+/* Atmospheric Ambient Glow Background Layer */
+.ambient-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -10;
+  background: 
+    radial-gradient(ellipse 80% 60% at 50% -15%, rgba(0, 242, 254, 0.12), transparent 70%),
+    radial-gradient(circle at 90% 20%, rgba(115, 24, 255, 0.08), transparent 50%),
+    radial-gradient(circle at 10% 80%, rgba(237, 144, 0, 0.05), transparent 40%);
+}
+
+/* ==========================================================================
+   Typography Utilities
+   ========================================================================== */
+.font-headline { font-family: var(--font-headline) !important; }
+.font-body { font-family: var(--font-body) !important; }
+.font-mono { font-family: var(--font-mono) !important; }
+
+.text-primary-color { color: var(--primary) !important; }
+.text-cryo { color: var(--primary-container) !important; }
+.text-cyan-dim { color: var(--primary-fixed-dim) !important; }
+.text-amber { color: var(--secondary) !important; }
+.text-amber-glow { color: var(--secondary-container) !important; }
+.text-violet { color: var(--tertiary-fixed-dim) !important; }
+.text-muted-variant { color: var(--text-on-surface-variant) !important; }
+.text-dim-outline { color: var(--text-outline) !important; }
+
+.display-hero {
+  font-family: var(--font-headline);
+  font-size: clamp(64px, 7vw, 96px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.headline-lg {
+  font-family: var(--font-headline);
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.headline-md {
+  font-family: var(--font-headline);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.headline-sm {
+  font-family: var(--font-headline);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.label-data-lg {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.label-data-md {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.label-caps {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Material Symbols alignment */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  line-height: 1;
+  display: inline-block;
+}
+.material-symbols-outlined.filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+.aether-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  z-index: 1030;
+  background-color: rgba(10, 14, 24, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.brand-logo-svg {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.nav-hub-track {
+  background-color: rgba(24, 27, 38, 0.7);
+  padding: 4px;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-hub-link {
+  color: var(--text-on-surface-variant);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-block;
+}
+.nav-hub-link:hover {
+  color: var(--text-on-surface);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.nav-hub-link.active {
+  background-color: var(--surface-container-high);
+  color: var(--primary-container) !important;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.15);
+}
+
+/* Header search bar */
+.search-wrapper {
+  position: relative;
+  width: 280px;
+}
+.search-wrapper input {
+  width: 100%;
+  height: 40px;
+  padding-left: 38px;
+  padding-right: 64px;
+  background-color: rgba(24, 27, 38, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--text-on-surface);
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+.search-wrapper input:focus {
+  outline: none;
+  border-color: var(--primary-container);
+  background-color: var(--surface-container);
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.25);
+}
+.search-wrapper input::placeholder {
+  color: var(--text-outline);
+}
+.search-icon-pos {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-outline);
+  pointer-events: none;
+}
+.kbd-shortcut {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(49, 52, 64, 0.8);
+  color: var(--text-on-surface-variant);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  pointer-events: none;
+}
+
+/* Status Chips & Toggles */
+.chip-online {
+  background-color: var(--surface-container-low);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.unit-toggle-tray {
+  background-color: var(--surface-container-low);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.unit-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-on-surface-variant);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.unit-btn.active {
+  background-color: var(--surface-container-high);
+  color: var(--primary-container);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.btn-icon-glass {
+  background-color: var(--surface-container-low);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-on-surface-variant);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.btn-icon-glass:hover {
+  background-color: var(--surface-container-high);
+  color: var(--primary-container);
+  border-color: rgba(0, 242, 254, 0.3);
+}
+
+.avatar-img {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-pill);
+  object-fit: cover;
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+}
+
+/* Pulsing indicators */
+.pulse-beacon {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+}
+.pulse-beacon.cyan {
+  background-color: var(--primary-fixed-dim);
+  box-shadow: 0 0 8px var(--primary-container);
+  animation: pulseAnim 2s infinite ease-in-out;
+}
+.pulse-beacon.amber {
+  background-color: var(--secondary);
+  box-shadow: 0 0 8px var(--secondary-container);
+  animation: pulseAnim 1.8s infinite ease-in-out;
+}
+@keyframes pulseAnim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+/* ==========================================================================
+   Glassmorphism Cards & Panels
+   ========================================================================== */
+.glass-panel {
+  background: var(--glass-card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-card-border);
+  border-top: 1px solid var(--glass-card-border-top);
+  border-bottom: 1px solid var(--glass-card-border-bottom);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.glass-panel-subtle {
+  background: var(--glass-card-subtle);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-lg);
+}
+
+.flare-glow-cyan {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(40px);
+}
+.flare-glow-amber {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(237, 144, 0, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(45px);
+}
+.flare-glow-violet {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(115, 24, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(45px);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn-cryo {
+  background-color: var(--primary-container);
+  color: var(--on-primary);
+  font-family: var(--font-headline);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 242, 254, 0.35);
+  transition: all 0.2s ease;
+}
+.btn-cryo:hover {
+  background-color: #6ff6ff;
+  color: #002022;
+  box-shadow: 0 0 24px rgba(0, 242, 254, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-glass {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--text-on-surface);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--font-headline);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  padding: 7px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-glass:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--primary-container);
+  border-color: rgba(0, 242, 254, 0.3);
+}
+
+.btn-pill-filter {
+  background-color: transparent;
+  color: var(--text-on-surface-variant);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.btn-pill-filter:hover {
+  color: var(--text-on-surface);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.btn-pill-filter.active {
+  background-color: var(--primary-container);
+  color: var(--on-primary);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 242, 254, 0.3);
+}
+
+/* ==========================================================================
+   Action Rail & Sub-header
+   ========================================================================== */
+.location-badge {
+  background-color: var(--surface-container-high);
+  color: var(--primary);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.quick-cities-pill-tray {
+  background-color: var(--surface-container-low);
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.city-pill-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-on-surface-variant);
+  font-family: var(--font-headline);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.city-pill-btn:hover {
+  color: var(--text-on-surface);
+}
+.city-pill-btn.active {
+  background-color: var(--primary-container);
+  color: var(--on-primary);
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(0, 242, 254, 0.35);
+}
+
+.telemetry-status-box {
+  background-color: rgba(24, 27, 38, 0.7);
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ==========================================================================
+   Tier 1: Bento Grid Components (Hero Weather & Spatial Radar)
+   ========================================================================== */
+.sun-cloud-visual {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.sun-cloud-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 24px rgba(0, 242, 254, 0.3));
+}
+.sun-orbit-spin {
+  transform-origin: 96px 64px;
+  animation: spinSlow 50s linear infinite;
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Daylight Solar Arc Box */
+.solar-arc-tray {
+  background-color: rgba(28, 31, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+}
+.solar-arc-svg {
+  width: 100%;
+  height: 60px;
+  overflow: visible;
+}
+
+/* Micro Telemetry 7-Pill Ribbon */
+.micro-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+@media (min-width: 576px) {
+  .micro-telemetry-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 992px) {
+  .micro-telemetry-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+
+.micro-tile {
+  background-color: rgba(28, 31, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+.micro-tile:hover {
+  background-color: rgba(38, 42, 53, 0.85);
+  border-color: rgba(0, 242, 254, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Spatial Radar Mini-Card Widget */
+.radar-mini-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--surface-container-lowest);
+}
+.radar-map-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+  filter: contrast(125%) brightness(0.9);
+}
+.radar-vector-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Rotating Radar Beam Animation */
+.radar-sweep-beam {
+  transform-origin: 250px 200px;
+  animation: radarSweepAnim 5s linear infinite;
+}
+@keyframes radarSweepAnim {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.radar-meta-badge {
+  background-color: rgba(10, 14, 24, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.radar-legend-bar {
+  background-color: rgba(10, 14, 24, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.radar-precip-scale {
+  height: 6px;
+  width: 110px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, #6ff6ff, #00f2fe, #ffb86b, #93000a);
+}
+
+/* ==========================================================================
+   Tier 2: 24-Hour Scannable Hourly Forecast Track
+   ========================================================================== */
+.hourly-scroll-track {
+  overflow-x: auto;
+  display: flex;
+  gap: 10px;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+}
+.hourly-card {
+  flex: 0 0 112px;
+  background-color: rgba(28, 31, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+.hourly-card:hover {
+  background-color: var(--surface-container-high);
+  border-color: rgba(0, 242, 254, 0.3);
+  transform: translateY(-2px);
+}
+.hourly-card.active-slot {
+  background-color: rgba(38, 42, 53, 0.9);
+  border-color: rgba(0, 242, 254, 0.4);
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.15);
+}
+.hourly-card.peak-rain-slot {
+  background-color: rgba(0, 242, 254, 0.08);
+  border-color: rgba(0, 242, 254, 0.3);
+}
+
+.precip-bar-track {
+  width: 100%;
+  height: 4px;
+  background-color: var(--surface-container-lowest);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.precip-bar-fill {
+  height: 100%;
+  background-color: var(--primary-container);
+  border-radius: var(--radius-pill);
+}
+
+/* ==========================================================================
+   Tier 3: Quad-Grid Essential Telemetry Cards
+   ========================================================================== */
+/* Precipitation Sparkbar Chart */
+.sparkbar-chart-track {
+  height: 80px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding-top: 16px;
+}
+.sparkbar-bar {
+  flex: 1;
+  background-color: var(--surface-container);
+  border-radius: 3px 3px 0 0;
+  transition: height 0.3s ease;
+}
+.sparkbar-bar.active {
+  background-color: var(--primary-container);
+  box-shadow: 0 0 8px var(--primary-container);
+}
+.sparkbar-bar.rising {
+  background-color: rgba(0, 242, 254, 0.6);
+}
+
+/* Compass Dial */
+.compass-box {
+  width: 110px;
+  height: 110px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.compass-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Solar UV Gradient Slider */
+.uv-gradient-track {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, #00f2fe 0%, #ffb86b 50%, #ff5449 100%);
+  position: relative;
+}
+.uv-pin-marker {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 10px;
+  border-radius: var(--radius-pill);
+  background-color: #ffffff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+  transform: translateX(-50%);
+}
+
+/* Moon Phase Widget */
+.moon-sphere {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background-color: var(--surface-container-highest);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(209, 188, 255, 0.25);
+  flex-shrink: 0;
+}
+.moon-illuminated {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: var(--tertiary-fixed);
+  clip-path: ellipse(78% 100% at 75% 50%);
+  opacity: 0.92;
+}
+
+/* ==========================================================================
+   Tier 4: Monitored Atmospheric Stations
+   ========================================================================== */
+.station-tile {
+  background-color: rgba(28, 31, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.station-tile:hover {
+  background-color: rgba(38, 42, 53, 0.9);
+  border-color: rgba(0, 242, 254, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.station-icon-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-container-highest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+.station-tile:hover .station-icon-avatar {
+  transform: scale(1.08);
+}
+
+/* ==========================================================================
+   View 2: Interactive Radar & Full Maps View
+   ========================================================================== */
+.radar-full-viewport {
+  position: relative;
+  width: 100%;
+  height: 720px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background-color: #070b15;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7);
+}
+.radar-map-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.radar-floating-top-bar {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+.radar-floating-top-bar > * {
+  pointer-events: auto;
+}
+
+.layer-switcher-tray {
+  background-color: rgba(10, 14, 24, 0.88);
+  backdrop-filter: blur(24px);
+  padding: 4px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 4px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  overflow-x: auto;
+}
+.layer-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-on-surface-variant);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.layer-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-on-surface);
+}
+.layer-btn.active {
+  background-color: var(--surface-container-high);
+  color: var(--primary-container);
+  font-weight: 600;
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.25);
+}
+
+.radar-dock-controls {
+  position: absolute;
+  right: 16px;
+  top: 80px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dock-btn-group {
+  background-color: rgba(10, 14, 24, 0.88);
+  backdrop-filter: blur(24px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+.dock-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  color: var(--text-on-surface);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.dock-btn:hover {
+  background-color: var(--surface-container);
+  color: var(--primary-container);
+}
+
+.radar-bottom-player-bar {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 20;
+  background-color: rgba(10, 14, 24, 0.9);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+.radar-scrubber-slider {
+  flex: 1;
+  accent-color: var(--primary-container);
+  cursor: pointer;
+}
+
+/* Radar Station & Storm Cell Markers */
+.radar-station-pin {
+  background-color: rgba(10, 14, 24, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-on-surface);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.radar-station-pin:hover {
+  background-color: var(--surface-container-high);
+  border-color: var(--primary-container);
+}
+
+/* Telemetry Drawer Overlay */
+.telemetry-offcanvas-pane {
+  background-color: rgba(16, 19, 29, 0.95);
+  backdrop-filter: blur(32px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-on-surface);
+}
+
+/* ==========================================================================
+   View 3: 10-Day Extended Forecast View
+   ========================================================================== */
+.trajectory-chart-box {
+  width: 100%;
+  height: 220px;
+  position: relative;
+  overflow-x: auto;
+}
+.trajectory-svg {
+  width: 100%;
+  min-width: 760px;
+  height: 100%;
+  overflow: visible;
+}
+
+.day-forecast-row {
+  background-color: rgba(28, 31, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.day-forecast-row:hover {
+  background-color: rgba(38, 42, 53, 0.85);
+  border-color: rgba(0, 242, 254, 0.25);
+  transform: translateX(4px);
+}
+.thermal-range-bar-track {
+  width: 120px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-container-highest);
+  position: relative;
+  overflow: hidden;
+}
+.thermal-range-fill {
+  position: absolute;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--primary-fixed-dim), var(--secondary));
+}
+
+.accordion-drawer {
+  background-color: rgba(10, 14, 24, 0.65);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  animation: fadeIn 0.25s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   View 4: Air Quality & Health View
+   ========================================================================== */
+.aqi-circular-gauge {
+  width: 220px;
+  height: 220px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aqi-circular-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.pollutant-card {
+  background-color: rgba(28, 31, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 160px;
+  transition: all 0.2s ease;
+}
+.pollutant-card:hover {
+  background-color: var(--surface-container-high);
+  border-color: rgba(0, 242, 254, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Modals & Command Palette
+   ========================================================================== */
+.aether-modal .modal-content {
+  background-color: rgba(16, 19, 29, 0.95);
+  backdrop-filter: blur(32px);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 24px rgba(0, 242, 254, 0.15);
+  color: var(--text-on-surface);
+}
+.aether-modal .modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.aether-modal .modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Command Palette City List Item */
+.palette-city-item {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.palette-city-item:hover, .palette-city-item.active {
+  background-color: var(--surface-container-high);
+  color: var(--primary-container);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.aether-footer {
+  background-color: rgba(10, 14, 24, 0.9);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 32px 0;
+  margin-top: 60px;
+}
+.footer-link {
+  color: var(--text-on-surface-variant);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s ease;
+}
+.footer-link:hover {
+  color: var(--primary-container);
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  .aether-header {
+    height: 70px;
+  }
+  body {
+    padding-top: 70px;
+  }
+  .search-wrapper {
+    width: 200px;
+  }
+  .radar-full-viewport {
+    height: 520px;
+  }
+  .display-hero {
+    font-size: 64px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .search-wrapper {
+    display: none;
+  }
+  .radar-full-viewport {
+    height: 440px;
+  }
+  .display-hero {
+    font-size: 54px;
+  }
+  .hourly-card {
+    flex: 0 0 96px;
+    padding: 10px 6px;
+  }
+  .radar-bottom-player-bar {
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+}
